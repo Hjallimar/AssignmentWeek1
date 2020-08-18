@@ -389,9 +389,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf4e3ad8fd8f62641942fb8a3322fd6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxSizeForArray: 10
-  minRandomRange: 0
-  maxRandomRange: 100
+  maxSizeForArray: 10
+  minRandomRange: -100
+  maxRandomRange: 0
 --- !u!4 &620219063
 Transform:
   m_ObjectHideFlags: 0
