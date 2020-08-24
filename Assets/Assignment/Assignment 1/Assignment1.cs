@@ -145,7 +145,7 @@ public class Assignment1 : MonoBehaviour
 
         randomFilledArray = reversedArray;
 
-        Debug.Log("Before: " + before.TrimEnd(new Char[] { ' ', ',' }) + "\n" + "After: " + after.TrimEnd(new Char[] { ' ', ',' }));
+        Debug.Log("Before: " + before.TrimEnd(new char[] { ' ', ',' }) + "\n" + "After: " + after.TrimEnd(new char[] { ' ', ',' }));
     }
 
     /// <summary>
@@ -181,7 +181,7 @@ public class Assignment1 : MonoBehaviour
             boolCheck = true;
         }
 
-        Debug.Log(fizzbuzzString.TrimEnd(new Char[] { ' ', ',' }));
+        Debug.Log(fizzbuzzString.TrimEnd(new char[] { ' ', ',' }));
     }
 
     /// <summary>
