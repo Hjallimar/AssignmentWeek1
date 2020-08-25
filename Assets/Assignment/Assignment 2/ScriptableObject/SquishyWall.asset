@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: SquishyWall
   m_EditorClassIdentifier: 
   maxHealth: 5
-  damageSound: {fileID: 0}
-  deathSound: {fileID: 0}
+  damageSound: {fileID: 8300000, guid: ce57a433401139f49820ce0bd2ab2e86, type: 3}
+  damageReduction: 0.3

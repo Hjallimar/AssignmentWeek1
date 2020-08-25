@@ -7,13 +7,15 @@ public class DamageableObject : MonoBehaviour
 {
     [SerializeField] private Slider myHealthSlider;
     [SerializeField] private WallBase myStats = null;
-    private WallBase myInstance = null;
-    // Start is called before the first frame update
+    [SerializeField] private AudioSource audioSource;
+    public WallBase myInstance { get; set; } = null;
+
     void Start()
     {
         myInstance = Instantiate(myStats);
         myInstance.AssingMyGameObject(gameObject);
-        myHealthSlider.maxValue = myInstance.health;
+        myInstance.MyAudio = audioSource;
+        myHealthSlider.maxValue = myInstance.Health;
         myHealthSlider.value = myHealthSlider.maxValue;
     }
 
@@ -22,5 +24,4 @@ public class DamageableObject : MonoBehaviour
         myInstance.TakeDamage(damage);
         myHealthSlider.value -= damage;
     }
-
 }

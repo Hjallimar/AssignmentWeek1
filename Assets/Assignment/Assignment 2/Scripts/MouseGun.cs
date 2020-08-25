@@ -1,23 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Scripting.APIUpdating;
-using UnityEngine.UIElements;
-using UnityEngine.XR;
 
 public class MouseGun : MonoBehaviour
 {
     [SerializeField] private float damage = 3;
     [SerializeField] private LayerMask hitLayers;
     [SerializeField] private Transform firePoint;
-    [SerializeField] private Transform endPoint;
+
     List<HitNode> hitTargets = new List<HitNode>();
-
     private RaycastHit[] hits;
-
 
     void Update()
     {
@@ -30,7 +22,6 @@ public class MouseGun : MonoBehaviour
     private void RaycastScan()
     {
         hits = Physics.RaycastAll(firePoint.position, firePoint.forward, Mathf.Infinity, hitLayers);
-        Debug.Log(hits.Length);
         SortMyTargets();
     }
 
@@ -48,10 +39,9 @@ public class MouseGun : MonoBehaviour
             }
         }
 
-        BubbleSort(hitTargets, hitTargets.Count - 1);
+        BubbleSort(hitTargets, hitTargets.Count);
         DealDamageToTargets();
     }
-
 
     private float CalculateDistance(Vector3 vectOne, Vector3 vectTwo)
     {
@@ -60,16 +50,18 @@ public class MouseGun : MonoBehaviour
 
     private void BubbleSort(List<HitNode> arrayOfNodes, int listSize)
     {
-       if(listSize <= 1)
+        if(listSize <= 1)
         {
             return;
         }
-      
+
+        HitNode lowerValue;
+
         for (int i = 0; i < arrayOfNodes.Count() - 1; i++)
         {
             if (arrayOfNodes[i].IsMyDistanceHigher(arrayOfNodes[i + 1].MyDistance))
             {
-                HitNode lowerValue = arrayOfNodes.ElementAt(i + 1);
+                lowerValue = arrayOfNodes.ElementAt(i + 1);
                 arrayOfNodes[i + 1] = arrayOfNodes.ElementAt(i);
                 arrayOfNodes[i] = lowerValue;
             }
@@ -80,42 +72,18 @@ public class MouseGun : MonoBehaviour
 
     private void DealDamageToTargets()
     {
-        float reduceDamage = 0;
+        float reducedDamage = 0;
+
         foreach(HitNode dmgObj in hitTargets)
         {
-            if (reduceDamage <= damage)
+            if (reducedDamage < damage)
             {
-                dmgObj.MyTarget.OnDamageTaken(damage - reduceDamage);
-                reduceDamage += damage / 5f;
+                float reduce = damage * dmgObj.MyTarget.myInstance.DamageReduction;
+                dmgObj.MyTarget.OnDamageTaken(damage - reducedDamage);
+                reducedDamage += reduce;
             }
         }
 
         hitTargets.Clear();
-        Debug.Log("hit target list count: " + hitTargets.Count);
-    }
-
-}
-
-public class HitNode
-{
-    public float MyDistance { get; set; }
-    public DamageableObject MyTarget { get; set; }
-
-    public HitNode(float distance, DamageableObject hitObject)
-    {
-        MyDistance = distance;
-        MyTarget = hitObject;
-    }
-
-    public bool IsMyDistanceHigher(float distance)
-    {
-        if (MyDistance > distance)
-        {
-            return true;
-        }
-        else 
-        { 
-            return false;
-        }
     }
 }

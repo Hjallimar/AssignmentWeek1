@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: MeduimWall
   m_EditorClassIdentifier: 
   maxHealth: 7
-  damageSound: {fileID: 0}
-  deathSound: {fileID: 0}
+  damageSound: {fileID: 8300000, guid: c8c5fd68865805645bf8963f4f984947, type: 3}
+  damageReduction: 0.5

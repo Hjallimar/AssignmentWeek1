@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: TankyWall
   m_EditorClassIdentifier: 
   maxHealth: 10
-  damageSound: {fileID: 0}
-  deathSound: {fileID: 0}
+  damageSound: {fileID: 8300000, guid: 935cfd9c69580cd4180bdd851666d63b, type: 3}
+  damageReduction: 0.7
