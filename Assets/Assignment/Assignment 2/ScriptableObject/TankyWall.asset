@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19d23e2f415d0e64dbb92f70ba410090, type: 3}
   m_Name: TankyWall
   m_EditorClassIdentifier: 
-  maxHealth: 5
+  maxHealth: 10
   damageSound: {fileID: 0}
   deathSound: {fileID: 0}

@@ -12,17 +12,12 @@ public class MouseGun : MonoBehaviour
 {
     [SerializeField] private float damage = 3;
     [SerializeField] private LayerMask hitLayers;
-
-    private List<DamageableObject> targetsHit = new List<DamageableObject>();
-    
-    private Transform myCamera = default;
+    [SerializeField] private Transform firePoint;
+    [SerializeField] private Transform endPoint;
+    List<HitNode> hitTargets = new List<HitNode>();
 
     private RaycastHit[] hits;
 
-    private void Start()
-    {
-        myCamera = Camera.main.transform;
-    }
 
     void Update()
     {
@@ -34,32 +29,26 @@ public class MouseGun : MonoBehaviour
 
     private void RaycastScan()
     {
-        hits = Physics.RaycastAll(myCamera.position, myCamera.forward, Mathf.Infinity, hitLayers);
+        hits = Physics.RaycastAll(firePoint.position, firePoint.forward, Mathf.Infinity, hitLayers);
+        Debug.Log(hits.Length);
         SortMyTargets();
     }
 
     private void SortMyTargets()
     {
-        SortNode[] newHits = new SortNode[hits.Length];
-        int index = 0;
-        foreach(RaycastHit hit in hits)
+        DamageableObject hitTarget;
+
+        foreach (RaycastHit hit in hits)
         {
 
-            DamageableObject hitTarget = hit.collider.GetComponent<DamageableObject>();
+            hitTarget = hit.collider.GetComponent<DamageableObject>();
             if (hitTarget != null)
             {
-                newHits[index] = new SortNode(CalculateDistance(myCamera.transform.position, hit.point), hitTarget);
-                index++;
+                hitTargets.Add(new HitNode(CalculateDistance(firePoint.position, hit.point), hitTarget));
             }
         }
 
-        if (index < hits.Length - 1)
-        {
-            SortNode[] temporaryArray = new SortNode[index + 1];
-            newHits = temporaryArray;
-        }
-
-        BubbleSort(newHits);
+        BubbleSort(hitTargets, hitTargets.Count - 1);
         DealDamageToTargets();
     }
 
@@ -69,54 +58,64 @@ public class MouseGun : MonoBehaviour
         return (vectOne - vectTwo).magnitude;
     }
 
-    private void BubbleSort(SortNode[] arrayOfNodes)
+    private void BubbleSort(List<HitNode> arrayOfNodes, int listSize)
     {
-        bool sorting = false;
-        do
+       if(listSize <= 1)
         {
-            sorting = false;
-            for (int i = 0; i < arrayOfNodes.Count() - 1; i++)
-            {
-                if (arrayOfNodes[i].Distance > arrayOfNodes[i + 1].Distance)
-                {
-                    SortNode lowerValue = arrayOfNodes[i + 1];
-                    arrayOfNodes[i + 1] = arrayOfNodes[i];
-                    arrayOfNodes[i] = lowerValue;
-                    sorting = true;
-                }
-            }
-        } while (sorting);
-
-        foreach(SortNode node in arrayOfNodes)
-        {
-            targetsHit.Add(node.HitObject);
+            return;
         }
+      
+        for (int i = 0; i < arrayOfNodes.Count() - 1; i++)
+        {
+            if (arrayOfNodes[i].IsMyDistanceHigher(arrayOfNodes[i + 1].MyDistance))
+            {
+                HitNode lowerValue = arrayOfNodes.ElementAt(i + 1);
+                arrayOfNodes[i + 1] = arrayOfNodes.ElementAt(i);
+                arrayOfNodes[i] = lowerValue;
+            }
+        }
+
+        BubbleSort(arrayOfNodes, listSize - 1);
     }
 
     private void DealDamageToTargets()
     {
         float reduceDamage = 0;
-        foreach(DamageableObject dmgObj in targetsHit)
+        foreach(HitNode dmgObj in hitTargets)
         {
-            if (reduceDamage >= damage)
-                reduceDamage = damage;
-            dmgObj.OnDamageTaken(damage - reduceDamage);
-            reduceDamage += damage/3f;
+            if (reduceDamage <= damage)
+            {
+                dmgObj.MyTarget.OnDamageTaken(damage - reduceDamage);
+                reduceDamage += damage / 5f;
+            }
         }
 
-        targetsHit.Clear();
+        hitTargets.Clear();
+        Debug.Log("hit target list count: " + hitTargets.Count);
     }
 
 }
 
-public class SortNode
+public class HitNode
 {
-    public float Distance { get; set; }
-    public DamageableObject HitObject { get; set; }
+    public float MyDistance { get; set; }
+    public DamageableObject MyTarget { get; set; }
 
-    public SortNode(float distance, DamageableObject hitObject)
+    public HitNode(float distance, DamageableObject hitObject)
     {
-        Distance = distance;
-        HitObject = hitObject;
+        MyDistance = distance;
+        MyTarget = hitObject;
+    }
+
+    public bool IsMyDistanceHigher(float distance)
+    {
+        if (MyDistance > distance)
+        {
+            return true;
+        }
+        else 
+        { 
+            return false;
+        }
     }
 }

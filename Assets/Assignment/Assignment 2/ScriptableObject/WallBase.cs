@@ -7,7 +7,7 @@ public class WallBase : ScriptableObject
     [SerializeField] private float maxHealth = 10f;
     [SerializeField] private AudioClip damageSound = null;
     [SerializeField] private AudioClip deathSound = null;
-    private float health = 0;
+    public float health { get; set; } = 0;
     private GameObject myGameObject = null;
     private AudioSource myAudio = null;
     private bool dead = false;
@@ -26,8 +26,8 @@ public class WallBase : ScriptableObject
     public void TakeDamage(float damage)
     {        
         health -= damage;
-        
-        if(health > 0)
+        //Debug.Log(myGameObject.name + " recived " + damage + " and is now on " + health);
+        if (health > 0)
         {
             if(myAudio != null && damageSound != null)
             {
@@ -36,6 +36,7 @@ public class WallBase : ScriptableObject
         }
         else
         {
+            //Debug.Log(myGameObject.name + " recived damaged and died:  " + damage + " and is now on " + health);
             OnDeath();
         }
     }
@@ -49,7 +50,7 @@ public class WallBase : ScriptableObject
             myAudio.Play();
             Destroy(myGameObject, myAudio.clip.length);
         }
-        myGameObject.GetComponent<Collider>().enabled = false;
+        //myGameObject.GetComponent<Collider>().enabled = false;
         Destroy(myGameObject);
     }
 
