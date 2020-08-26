@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private Transform playermesh;
-    [SerializeField] private GameObject bullet;
-    [SerializeField] private Transform firePoint;
-    private Vector3 direction;
-    private Vector3 lookAt;
+    [SerializeField] private Transform playermesh = null;
+    [SerializeField] private GameObject bullet = null;
+    [SerializeField] private Transform firePoint = null;
+    private Vector3 direction = Vector3.zero;
+    private Vector3 lookAt = Vector3.zero;
     private float speed = 5;
 
     // Start is called before the first frame update

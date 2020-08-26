@@ -6,7 +6,7 @@ public class MouseGun : MonoBehaviour
 {
     [SerializeField] private float damage = 3;
     [SerializeField] private LayerMask hitLayers;
-    [SerializeField] private Transform firePoint;
+    [SerializeField] private Transform firePoint = default;
 
     List<HitNode> hitTargets = new List<HitNode>();
     private RaycastHit[] hits;
@@ -78,7 +78,7 @@ public class MouseGun : MonoBehaviour
         {
             if (reducedDamage < damage)
             {
-                float reduce = damage * dmgObj.MyTarget.myInstance.DamageReduction;
+                float reduce = dmgObj.MyTarget.myInstance.Health;
                 dmgObj.MyTarget.OnDamageTaken(damage - reducedDamage);
                 reducedDamage += reduce;
             }

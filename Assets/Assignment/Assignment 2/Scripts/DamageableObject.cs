@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class DamageableObject : MonoBehaviour
 {
-    [SerializeField] private Slider myHealthSlider;
+    [SerializeField] private Slider myHealthSlider = null;
     [SerializeField] private WallBase myStats = null;
-    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource audioSource = null;
     public WallBase myInstance { get; set; } = null;
 
     void Start()

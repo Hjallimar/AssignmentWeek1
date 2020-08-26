@@ -1873,7 +1873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2d3aa15b9cb65d41a9d0b785642875f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 3
+  damage: 7
   hitLayers:
     serializedVersion: 2
     m_Bits: 1
