@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private Transform playermesh = null;
     [SerializeField] private GameObject bullet = null;
     [SerializeField] private Transform firePoint = null;
     private Vector3 direction = Vector3.zero;
@@ -28,8 +27,8 @@ public class PlayerMovement : MonoBehaviour
         {
             lookAt = hit.point;
         }
-        lookAt.y = playermesh.position.y;
-        playermesh.LookAt(lookAt);
+        lookAt.y = transform.position.y;
+        transform.LookAt(lookAt);
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -41,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Move()
     {
-        playermesh.position += direction.normalized * speed * Time.deltaTime;
+        transform.position += direction.normalized * speed * Time.deltaTime;
     }
 
     void Fire()
