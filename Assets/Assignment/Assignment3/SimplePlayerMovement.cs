@@ -8,6 +8,8 @@ public class SimplePlayerMovement : MonoBehaviour
     [SerializeField] private float movementSpeed = 5f;
     [SerializeField] private LayerMask playerCollisionMask;
     [SerializeField] private CapsuleCollider myCollider;
+    [SerializeField] private Transform myCamera;
+
 
     private Vector3 direction = Vector3.zero;
 
@@ -15,7 +17,6 @@ public class SimplePlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         direction.x = Input.GetAxisRaw("Horizontal");
         direction.z = Input.GetAxisRaw("Vertical");
         
@@ -31,6 +32,7 @@ public class SimplePlayerMovement : MonoBehaviour
         point1.y += myCollider.height / 2;
         Vector3 point2 = transform.position;
         point2.y -= myCollider.height / 2;
+
         if (!Physics.CapsuleCast(point1, point2, myCollider.radius, direction.normalized, movementSpeed * Time.deltaTime, playerCollisionMask))
         {
             MoveCharacter();
@@ -39,6 +41,6 @@ public class SimplePlayerMovement : MonoBehaviour
 
     void MoveCharacter()
     {
-        transform.position += direction.normalized * Time.deltaTime;
+        transform.position += direction.normalized * movementSpeed * Time.deltaTime;
     }
 }
