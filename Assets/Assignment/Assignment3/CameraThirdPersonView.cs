@@ -20,6 +20,8 @@ public class CameraThirdPersonView : MonoBehaviour
     [SerializeField] private float maxClampLimit = 45f;
     [SerializeField] private float minClampLimit = -30f;
 
+    RaycastHit hit;
+    private bool rotateCamera = false;
     private Vector3 direction = Vector3.zero;
 
     void Awake()
@@ -30,22 +32,29 @@ public class CameraThirdPersonView : MonoBehaviour
 
     private void Start()
     {
-        ToggleVisibleCursor(false);
+        ToggleVisibleCursor(true);
     }
 
     void Update()
     {
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButtonDown(1))
         {
             ToggleVisibleCursor(false);
+            rotateCamera = true;
+        }
+        
+        if (Input.GetMouseButtonUp(1))
+        {
+            ToggleVisibleCursor(true);
+            rotateCamera = false;
+        }
+
+        if (rotateCamera)
+        {
             direction.x -= mouseSensitivity * Input.GetAxisRaw("Mouse Y");
             direction.y += mouseSensitivity * Input.GetAxisRaw("Mouse X");
             direction.x = Mathf.Clamp(direction.x, minClampLimit, maxClampLimit);
             transform.rotation = Quaternion.Euler(direction.x, direction.y, 0f);
-        }
-        else
-        {
-            ToggleVisibleCursor(true);
         }
 
         CameraPosition();
@@ -58,7 +67,6 @@ public class CameraThirdPersonView : MonoBehaviour
 
     void CameraPosition()
     {
-        RaycastHit hit;
         Debug.DrawRay(playerTransform.position, -transform.forward, Color.red);
         if (Physics.SphereCast(playerTransform.position, 0.4f, -transform.forward, out hit, -cameraDistance, cameraCollisionMask))
         {
