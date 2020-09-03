@@ -101,7 +101,7 @@ public class CharacterMovement : MonoBehaviour
     {
         Vector3 velocity = moveDirection * (currentSpeed * inputAmmount);
         velocity.y = adjustVerticalVelocity * characterData.gravityMultiplier;
-        myRigidbody.velocity = velocity;// * Time.deltaTime;
+        myRigidbody.velocity = velocity;
     }
 
     private void ExitCrouch()

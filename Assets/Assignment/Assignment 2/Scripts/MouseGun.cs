@@ -5,7 +5,7 @@ using UnityEngine;
 public class MouseGun : MonoBehaviour
 {
     [SerializeField] private float damage = 3;
-    [SerializeField] private LayerMask hitLayers;
+    [SerializeField] private LayerMask hitLayers = default;
     [SerializeField] private Transform firePoint = default;
 
     List<HitNode> hitTargets = new List<HitNode>();
