@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PlayerInputFPS : MonoBehaviour
 {
+    [SerializeField] private LayerMask interactableLayers;
+    [SerializeField] private float interactableRayLenght = 50f;
+    [SerializeField] private Camera myCamera;
+    [SerializeField] private CrosshairBehaviour myCrosshair;
+    //add a chrosshair that can change icons and what'not
     private CharacterMovement movement;
 
 
@@ -23,12 +28,40 @@ public class PlayerInputFPS : MonoBehaviour
         movement.jumpInput = Input.GetButtonDown("Jump");
         movement.crouchInput = Input.GetButtonDown("Crouch");
 
-        Interract();
+        Ray screenRay = myCamera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(screenRay, interactableRayLenght, interactableLayers, QueryTriggerInteraction.Ignore))
+        {
+            myCrosshair.ChangeCrosshairStatus(CrosshairBehaviour.Status.Interactable);
+        }
+        else
+        {
+            myCrosshair.ChangeCrosshairStatus(CrosshairBehaviour.Status.Default);
+        }
+
+            if (Input.GetMouseButtonDown(0))
+        {
+            Interract();
+        }
     }
 
 
     private void Interract()
     {
-        //Todo interact with stuff
+        Ray screenRay = myCamera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hitInfo;
+        if (Physics.Raycast(screenRay, out hitInfo, interactableRayLenght, interactableLayers, QueryTriggerInteraction.Ignore))
+        {
+            I_Interactable interactable = hitInfo.collider.GetComponent<I_Interactable>();
+            if (interactable != null)
+            {
+                myCrosshair.ChangeCrosshairStatus(CrosshairBehaviour.Status.Interact);
+                interactable.Interact(transform);
+            }
+            else
+            {
+                myCrosshair.ChangeCrosshairStatus(CrosshairBehaviour.Status.Default);
+                //set the crosshair to default
+            }
+        }
     }
 }
