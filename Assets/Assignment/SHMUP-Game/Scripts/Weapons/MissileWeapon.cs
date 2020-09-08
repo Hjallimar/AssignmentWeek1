@@ -1,24 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MissileWeapon : MonoBehaviour, IWeapon
 {
     [SerializeField] private GameObject bulletType = null;
-    [SerializeField] private float fireRate = 0f;
-    [SerializeField] private Sprite weaponSprite = null;
+    [SerializeField] private float fireRate = 1.2f;
+    [SerializeField] private Transform firePoint = null;
+
+    private void Awake()
+    {
+        PlayerWeaponBehaviour.AddWeapon(this);
+    }
 
     public void Fire()
     {
-
+        GameObject newBullet = Instantiate(bulletType);
+        newBullet.transform.position = firePoint.position;
+        newBullet.transform.rotation = firePoint.rotation;
     }
+
     public float GetFireRate()
     {
-        return 1f;
-    }
-
-    public Sprite GetSprite()
-    {
-        return weaponSprite;
+        return fireRate;
     }
 }

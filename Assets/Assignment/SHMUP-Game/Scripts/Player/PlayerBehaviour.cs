@@ -9,8 +9,6 @@ public class PlayerBehaviour : MonoBehaviour, IDamageableObject
     private MovementBehaviour movementBehaviour = null;
     private PlayerWeaponBehaviour weaponBehaviour = null;
 
-    private LazerWeapon lazoor;
-
     private Vector3 direction = Vector3.zero;
     private PlayerController controller = null;
 
@@ -31,6 +29,7 @@ public class PlayerBehaviour : MonoBehaviour, IDamageableObject
             controller = controllers[0];
         }
 
+        UIController.AssignPlayer(100f);
         controller.AssingVariables(movementBehaviour, transform);
     }
 
@@ -50,9 +49,25 @@ public class PlayerBehaviour : MonoBehaviour, IDamageableObject
         }
         else if (controller.GetSwapWeaponInput())
         {
+            UIController.ChangeWeapon(-1);
             Debug.Log("Swaping Weapons");
-            weaponBehaviour.SwapWeapon(1);
+            //weaponBehaviour.SwapWeapon(1);
         }
+
+        if (controller.GetShieldInput())
+        {
+            UIController.ShieldActivated(5);
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            UIController.UpdatePlayerHealth(1);
+            UIController.UpdatePlayerScore(20);
+
+        }
+
+
+
 
         movementBehaviour.MoveTowards(direction);
     }

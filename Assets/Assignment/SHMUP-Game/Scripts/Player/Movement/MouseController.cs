@@ -52,4 +52,13 @@ public class MouseController : PlayerController
         }
         return false;
     }
+
+    public override bool GetShieldInput()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            return true;
+        }
+        return false;
+    }
 }

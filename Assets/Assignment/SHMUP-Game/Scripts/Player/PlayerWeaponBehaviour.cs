@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerWeaponBehaviour : MonoBehaviour
 {
-    private List<IWeapon> weaponList = new List<IWeapon>();
+    private static List<IWeapon> weaponList = new List<IWeapon>();
 
     private IWeapon currentWeapon = null;
 
@@ -32,7 +32,7 @@ public class PlayerWeaponBehaviour : MonoBehaviour
         coolDown += coolDown > 3 ? 0 : Time.deltaTime;
     }
 
-    public void AddWeapon(IWeapon newWeapon)
+    public static void AddWeapon(IWeapon newWeapon)
     {
         if (!weaponList.Contains(newWeapon))
         {

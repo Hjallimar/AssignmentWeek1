@@ -390,7 +390,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1370370790}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.758, y: 0}
   m_AnchorMax: {x: 0.9116722, y: 1}
@@ -430,9 +430,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Player Score:
-
-'
+  m_Text: 'Player Score:'
 --- !u!222 &144482527
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -664,13 +662,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1993267691}
-  m_RootOrder: 0
+  m_Father: {fileID: 1370370790}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.17833611, y: 0}
   m_AnchorMax: {x: 0.26667222, y: 1}
-  m_AnchoredPosition: {x: 98.19519, y: 0}
-  m_SizeDelta: {x: 44.94938, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &605982844
 MonoBehaviour:
@@ -705,7 +703,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 100
+  m_Text: '***'
 --- !u!222 &605982845
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1010,7 +1008,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 603a5ed80a5f01f4792a830be1f9ca98, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1105,7 +1103,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1370370790}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.9116722, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1145,9 +1143,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '1000
-
-'
+  m_Text: '***'
 --- !u!222 &827427332
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1287,21 +1283,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.50980395}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.72156864}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 3e12dcdaff4eeba48a32aeab821d7b46, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
+  m_FillMethod: 1
+  m_FillAmount: 0
   m_FillClockwise: 0
-  m_FillOrigin: 2
+  m_FillOrigin: 1
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!222 &966413390
@@ -1344,7 +1340,7 @@ RectTransform:
   - {fileID: 1305815915}
   - {fileID: 387285456}
   m_Father: {fileID: 1370370790}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.42167222, y: 0.16216934}
   m_AnchorMax: {x: 0.688, y: 0.83783066}
@@ -1558,7 +1554,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletType: {fileID: 0}
   fireRate: 0
-  weaponSprite: {fileID: 0}
+  firePoints: []
 --- !u!114 &1097454517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1573,7 +1569,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletType: {fileID: 0}
   fireRate: 0
-  weaponSprite: {fileID: 0}
+  firePoint: {fileID: 0}
 --- !u!114 &1097454518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1588,7 +1584,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletType: {fileID: 0}
   fireRate: 0
-  weaponSprite: {fileID: 0}
+  firePoint: {fileID: 0}
 --- !u!1 &1146398144
 GameObject:
   m_ObjectHideFlags: 0
@@ -1711,7 +1707,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1370370790}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3333278, y: 0}
   m_AnchorMax: {x: 0.42167222, y: 1}
@@ -2220,6 +2216,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1993267691}
+  - {fileID: 605982843}
   - {fileID: 1211471251}
   - {fileID: 994446650}
   - {fileID: 144482525}
@@ -2411,7 +2408,7 @@ GameObject:
   - component: {fileID: 1515391867}
   - component: {fileID: 1515391866}
   m_Layer: 5
-  m_Name: Current Weapon (1)
+  m_Name: LeftWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2431,8 +2428,8 @@ RectTransform:
   m_Father: {fileID: 1058451025}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.44000003, y: 0.11435105}
-  m_AnchorMax: {x: 0.47333613, y: 0.707649}
+  m_AnchorMin: {x: 0.43629634, y: 0.11435105}
+  m_AnchorMax: {x: 0.46963245, y: 0.707649}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2456,7 +2453,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 575ddd269f95ddb47b0d87600dcd9439, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2486,6 +2483,7 @@ GameObject:
   - component: {fileID: 1618610349}
   - component: {fileID: 1618610348}
   - component: {fileID: 1618610347}
+  - component: {fileID: 1618610351}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2574,6 +2572,29 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1618610351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1618610346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeefd68328ff56545a07ba11709f284e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameUIPanel: {fileID: 1498612230}
+  menuUIPanel: {fileID: 1884615899}
+  playerHealth: {fileID: 605982844}
+  playerScore: {fileID: 827427331}
+  bossName: {fileID: 1211471252}
+  bossSlider: {fileID: 0}
+  shieldCooldown: {fileID: 966413389}
+  weaponSlots:
+  - {fileID: 1515391866}
+  - {fileID: 786408533}
+  - {fileID: 1648909874}
 --- !u!1 &1648909872
 GameObject:
   m_ObjectHideFlags: 0
@@ -2586,7 +2607,7 @@ GameObject:
   - component: {fileID: 1648909875}
   - component: {fileID: 1648909874}
   m_Layer: 5
-  m_Name: Current Weapon (2)
+  m_Name: RightWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2606,8 +2627,8 @@ RectTransform:
   m_Father: {fileID: 1058451025}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.52666396, y: 0.11435105}
-  m_AnchorMax: {x: 0.56, y: 0.707649}
+  m_AnchorMin: {x: 0.53036773, y: 0.11435105}
+  m_AnchorMax: {x: 0.5637038, y: 0.707649}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2631,7 +2652,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 07377f18ac4d22e49959040bc302f590, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2919,6 +2940,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cc4a683575dcfd49b2661a95eeefc0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fireButton: 32
+  shieldButton: 113
+  swapWeaponButton: 9
 --- !u!114 &1840734458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2981,14 +3005,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 3e12dcdaff4eeba48a32aeab821d7b46, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3186,8 +3210,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 605982843}
+  m_Children: []
   m_Father: {fileID: 1370370790}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3229,9 +3252,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Player Health:
-
-'
+  m_Text: 'Player Health:'
 --- !u!222 &1993267693
 CanvasRenderer:
   m_ObjectHideFlags: 0
