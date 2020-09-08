@@ -15,8 +15,8 @@ TagManager:
   - 
   - World
   - Interactable
-  - 
-  - 
+  - BulletKillLayer
+  - UnitKillLayer
   - 
   - 
   - 

@@ -1,50 +1,64 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBehaviour : MonoBehaviour
+public class PlayerBehaviour : MonoBehaviour, IDamageableObject
 {
-    private MovementBehaviour myMovement = null;
+    [SerializeField] private bool MouseMovement = false;
+    [SerializeField] public List<PlayerController> controllers = new List<PlayerController>();
+    
+    private MovementBehaviour movementBehaviour = null;
+    private PlayerWeaponBehaviour weaponBehaviour = null;
 
+    private LazerWeapon lazoor;
 
+    private Vector3 direction = Vector3.zero;
+    private PlayerController controller = null;
 
-    //private Weapon currentWeapon;
-    //private List<Weapon> myWeapons = new List<Weapon>();
-    Coroutine playerFire;
-    private Vector3 direction;
-    // Start is called before the first frame update
     void Awake()
     {
-        myMovement = GetComponent<MovementBehaviour>();
+        movementBehaviour = GetComponent<MovementBehaviour>();
+        weaponBehaviour = GetComponent<PlayerWeaponBehaviour>();
+
+        if (MouseMovement)
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = false;
+            controller = controllers[1];
+        }
+        else
+        {
+            Cursor.visible = true;
+            controller = controllers[0];
+        }
+
+        controller.AssingVariables(movementBehaviour, transform);
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        direction.x = Input.GetAxis("Horizontal");
-        direction.y = Input.GetAxis("Vertical");
+        controller.GetDirectionInput();
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (controller.GetFireInput())
         {
-            playerFire = StartCoroutine(FireMyWeapon());
+            weaponBehaviour.FireWeapon();
         }
 
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (controller.GetStopFireInput())
         {
-            StopCoroutine(playerFire);
+            weaponBehaviour.StopFire();
+        }
+        else if (controller.GetSwapWeaponInput())
+        {
+            Debug.Log("Swaping Weapons");
+            weaponBehaviour.SwapWeapon(1);
         }
 
-        myMovement.MovePlayer(direction);
+        movementBehaviour.MoveTowards(direction);
     }
 
-    IEnumerator FireMyWeapon()
+    public void TakeDamage(float damage)
     {
-        while (true)
-        {
-            Debug.Log("Hell yea, I'm blasting");
-        }
+
     }
-
-
-
 }

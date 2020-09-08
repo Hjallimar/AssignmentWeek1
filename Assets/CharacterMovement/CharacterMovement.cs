@@ -4,27 +4,27 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
 public class CharacterMovement : MonoBehaviour
 {
-    [NonSerialized] public float forwardInput;
-    [NonSerialized] public float sideWaysInput;
-    [NonSerialized] public float TurnInput;
-    [NonSerialized] public bool runInput;
-    [NonSerialized] public bool jumpInput;
-    [NonSerialized] public bool crouchInput;
+    [NonSerialized] public float forwardInput = 0f;
+    [NonSerialized] public float sideWaysInput = 0f;
+    [NonSerialized] public float TurnInput = 0f;
+    [NonSerialized] public bool runInput = default;
+    [NonSerialized] public bool jumpInput = default;
+    [NonSerialized] public bool crouchInput = default;
 
-    [SerializeField] private float maxDistance;
+    [SerializeField] private float maxDistance = 0f;
     [SerializeField] private float skinWidth = 0.01f;
     [SerializeField] private CharacterData characterData;
 
-    private Vector2 originalCapsuleSize;
+    private Vector2 originalCapsuleSize = Vector2.zero;
 
-    private Vector3 moveDirection;
-    private float currentSpeed;
-    private float adjustVerticalVelocity;
-    private float inputAmmount;
+    private Vector3 moveDirection = Vector3.zero;
+    private float currentSpeed = 0f;
+    private float adjustVerticalVelocity = 0f;
+    private float inputAmmount = 0f;
 
-    private Transform myTransform;
-    private Rigidbody myRigidbody;
-    private CapsuleCollider myCollider;
+    private Transform myTransform = default;
+    private Rigidbody myRigidbody = default;
+    private CapsuleCollider myCollider = default;
 
     public bool IsCrouching { get; private set; }
     public bool IsRunning { get; private set; }

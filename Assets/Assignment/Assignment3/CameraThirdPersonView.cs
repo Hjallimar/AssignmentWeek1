@@ -25,7 +25,6 @@ public class CameraThirdPersonView : MonoBehaviour
     [SerializeField] private float minClampLimit = -30f;
 
     RaycastHit hit;
-    private bool rotateCamera = false;
     private Vector3 direction = Vector3.zero;
     private float cameraDistance = -10f;
     private Coroutine cameraRotation;
@@ -36,7 +35,6 @@ public class CameraThirdPersonView : MonoBehaviour
         {
             cameraDistance = maxDistanceFromPlayer;
         }
-        //transform.LookAt(playerTransform);
         direction = playerTransform.rotation.eulerAngles;
         transform.position = transform.forward * cameraDistance + playerTransform.position;
     }
@@ -69,7 +67,6 @@ public class CameraThirdPersonView : MonoBehaviour
 
     private IEnumerator RotateMyCamera()
     {
-        Debug.Log("Corutine started");
         ToggleVisibleCursor(false);
         while (true)
         {

@@ -1,4 +1,4 @@
-﻿Shader "Custom/Fade"
+﻿;Shader "Custom/Fade"
 {
     Properties
     {

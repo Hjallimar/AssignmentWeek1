@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerInputFPS : MonoBehaviour
 {
-    [SerializeField] private LayerMask interactableLayers;
+    [SerializeField] private LayerMask interactableLayers = default;
     [SerializeField] private float interactableRayLenght = 50f;
-    [SerializeField] private Camera myCamera;
-    [SerializeField] private CrosshairBehaviour myCrosshair;
+    [SerializeField] private Camera myCamera = null;
+    [SerializeField] private CrosshairBehaviour myCrosshair = null;
     //add a chrosshair that can change icons and what'not
     private CharacterMovement movement;
 

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class CrosshairBehaviour : MonoBehaviour
 {
-    [SerializeField] private Image crossHair;
+    [SerializeField] private Image crossHair = null;
 
     public enum Status { Default, Interactable, Interact}
 
