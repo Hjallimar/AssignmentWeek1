@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Spread
   m_EditorClassIdentifier: 
   <MoveSpeed>k__BackingField: 10
-  <Damage>k__BackingField: 10
+  <Damage>k__BackingField: 6

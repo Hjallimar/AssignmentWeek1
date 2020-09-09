@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 034ae772328805c4abc52597b2370039, type: 3}
   m_Name: Missile
   m_EditorClassIdentifier: 
-  <MoveSpeed>k__BackingField: 10
+  <MoveSpeed>k__BackingField: 8
   <Damage>k__BackingField: 10
