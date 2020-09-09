@@ -1047,6 +1047,7 @@ GameObject:
   m_Component:
   - component: {fileID: 826566128}
   - component: {fileID: 826566127}
+  - component: {fileID: 826566129}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1084,6 +1085,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &826566129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826566126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faa9b175f8b01c2458ab4a8a5342e748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefabs:
+  - {fileID: 2575330884004652273, guid: 125df6bedaf9bd540b8d0fe52aaf51dc, type: 3}
+  - {fileID: 2575330884004652273, guid: 14aceedb8e2ad5844a19601730a2f8e6, type: 3}
+  - {fileID: 2575330884004652273, guid: 87b9fe1e998121a4a9f8323cff859e40, type: 3}
 --- !u!1 &827427329
 GameObject:
   m_ObjectHideFlags: 0
@@ -3289,6 +3306,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6527032622761515645, guid: b6a406b88e5abfe4ea58282a3dda49bb, type: 3}
+      propertyPath: bulletType
+      value: 
+      objectReference: {fileID: 2575330884004652273, guid: 87b9fe1e998121a4a9f8323cff859e40, type: 3}
+    - target: {fileID: 7386953406559554464, guid: b6a406b88e5abfe4ea58282a3dda49bb, type: 3}
+      propertyPath: bulletType
+      value: 
+      objectReference: {fileID: 2575330884004652273, guid: 14aceedb8e2ad5844a19601730a2f8e6, type: 3}
     - target: {fileID: 8029719342110634114, guid: b6a406b88e5abfe4ea58282a3dda49bb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.56

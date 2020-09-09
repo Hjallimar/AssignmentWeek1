@@ -6,20 +6,22 @@ public class SpreadWeapon : MonoBehaviour, IWeapon
     [SerializeField] private float fireRate = 0.8f;
     [SerializeField] private Transform[] firePoints = new Transform[3];
 
+    private ProjectileBaseBehaviour projectileBehaviour;
+
+
     private void Awake()
     {
         PlayerWeaponBehaviour.AddWeapon(this);
+        projectileBehaviour = bulletType.GetComponent<ProjectileBaseBehaviour>();
     }
 
     public void Fire()
     {
         foreach (Transform trans in firePoints)
         {
-            GameObject newBullet = Instantiate(bulletType);
+            GameObject newBullet = ProjectileObjectPool.GetProjectile(projectileBehaviour);
             newBullet.transform.position = trans.position;
             newBullet.transform.rotation = trans.rotation;
-
-            Destroy(newBullet, 5f);
         }
     }
 

@@ -6,14 +6,17 @@ public class LazerWeapon : MonoBehaviour, IWeapon
     [SerializeField] private float fireRate = 0.3f;
     [SerializeField] private Transform firePoint = null;
 
+    private ProjectileBaseBehaviour projectileBehaviour;
     private void Awake()
     {
         PlayerWeaponBehaviour.AddWeapon(this);
+
+        projectileBehaviour = bulletType.GetComponent<ProjectileBaseBehaviour>();
     }
 
     public void Fire()
     {
-        GameObject newBullet = Instantiate(bulletType);
+        GameObject newBullet = ProjectileObjectPool.GetProjectile(projectileBehaviour);
         newBullet.transform.position = firePoint.position;
         newBullet.transform.rotation = firePoint.rotation;
     }

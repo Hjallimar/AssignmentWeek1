@@ -13,6 +13,6 @@ public class BulletKillZone : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        Destroy(other.gameObject);
+        other.GetComponent<ProjectileBaseBehaviour>().ReturnToPool();
     }
 }
