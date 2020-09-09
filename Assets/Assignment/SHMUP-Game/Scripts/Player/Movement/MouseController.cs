@@ -6,7 +6,6 @@ public class MouseController : PlayerController
     private MovementBehaviour movementBehaviour = null;
     Vector3 direction = Vector3.zero;
 
-
     public override void AssingVariables(MovementBehaviour move, Transform player)
     {
         playerTrans = player;
@@ -28,7 +27,7 @@ public class MouseController : PlayerController
 
     public override bool GetFireInput()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0))
         {
             return true;
         }
@@ -37,25 +36,29 @@ public class MouseController : PlayerController
 
     public override bool GetStopFireInput()
     {
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(0))
         {
             return true;
         }
         return false;
     }
 
-    public override bool GetSwapWeaponInput()
+    public override int GetSwapWeaponInput()
     {
-        if (Input.mouseScrollDelta.magnitude > 0)
+        if (Input.mouseScrollDelta.y > 0)
         {
-            return true;
+            return 1;
         }
-        return false;
+        else if (Input.mouseScrollDelta.y < 0)
+        {
+            return -1;
+        }
+        return 0;
     }
 
     public override bool GetShieldInput()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
         {
             return true;
         }

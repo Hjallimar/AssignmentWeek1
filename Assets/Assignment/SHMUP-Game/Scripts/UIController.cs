@@ -7,9 +7,16 @@ public class UIController : MonoBehaviour
     private static UIController instance;
     public static UIController Instance { get { return instance; } }
 
+    [Header("Reference to the player")]
+    [SerializeField] private PlayerBehaviour player = null;
+
     [Header("The diferent main panels")]
     [SerializeField] private GameObject gameUIPanel = null;
     [SerializeField] private GameObject menuUIPanel = null;
+
+    [Header("Main Menu components")]
+    [SerializeField] private Toggle mouseController = null;
+    [SerializeField] private GameObject howToPlayPanel = null;
 
     [Header("Upper part of Game UI")]
     [SerializeField] private Text playerHealth = null;
@@ -36,6 +43,8 @@ public class UIController : MonoBehaviour
             instance = this;
         }
 
+        Time.timeScale = 0;
+
         Instance.bossSlider.gameObject.SetActive(false);
         Instance.bossName.text = "";
     }
@@ -48,17 +57,14 @@ public class UIController : MonoBehaviour
             int lastSprite = Instance.weaponSlots.Length - 1;
             spriteHolder = Instance.weaponSlots[0].sprite;
 
-            Debug.Log("SpriteHolder is  " + 0);
             for (int j = 0; j <= lastSprite; j++)
             {
-                if (j + 1 >= lastSprite)
+                if (j + 1 <= lastSprite)
                 {
-                    Debug.Log(j + " is now " + (j+1));
                     Instance.weaponSlots[j].sprite = Instance.weaponSlots[j + 1].sprite;
                 }
                 else
                 {
-                    Debug.Log("Swapping " + j + " and " + 0);
                     Instance.weaponSlots[j].sprite = spriteHolder;
                 }
             }
@@ -67,22 +73,40 @@ public class UIController : MonoBehaviour
         {
             int lastSprite = Instance.weaponSlots.Length - 1;
             spriteHolder = Instance.weaponSlots[lastSprite].sprite;
-            Debug.Log("SpriteHolder is  " + lastSprite);
             for (int j = lastSprite; j >= 0; j--)
             {
                 if (j - 1 >= 0)
                 {
-                    Debug.Log("Swapping " + j + " and " + (j - 1));
                     Instance.weaponSlots[j].sprite = Instance.weaponSlots[j - 1].sprite;
                 }
                 else
                 {
-                    Debug.Log("Swapping " + j + " and " + lastSprite);
                     Instance.weaponSlots[j].sprite = spriteHolder;
                 }
             }
         }
     }
+
+    public void StartGame()
+    {
+        player.MouseController(mouseController.isOn);
+        menuUIPanel.SetActive(false);
+        StartCoroutine(ReminderHowToPlay());
+    }
+
+    IEnumerator ReminderHowToPlay()
+    {
+        Time.timeScale = 1;
+        howToPlayPanel.SetActive(true);
+        float timer = 0;
+        while(timer < 5)
+        {
+            timer += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        howToPlayPanel.SetActive(false);
+    }
+
 
     public static void ShieldActivated(float duration)
     {
@@ -95,7 +119,6 @@ public class UIController : MonoBehaviour
 
     private static IEnumerator StartShieldCooldown()
     {
-
         Instance.shieldOnCD = true;
         float fillAmount = 1;
         while (fillAmount > 0)

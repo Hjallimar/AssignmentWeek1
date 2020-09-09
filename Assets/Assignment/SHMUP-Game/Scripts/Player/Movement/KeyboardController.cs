@@ -7,7 +7,8 @@ public class KeyboardController : PlayerController
 
     [SerializeField] private KeyCode fireButton;
     [SerializeField] private KeyCode shieldButton;
-    [SerializeField] private KeyCode swapWeaponButton;
+    [SerializeField] private KeyCode swapWeaponButtonRight;
+    [SerializeField] private KeyCode swapWeaponButtonLeft;
 
     public override void AssingVariables(MovementBehaviour move, Transform player)
     {
@@ -43,13 +44,17 @@ public class KeyboardController : PlayerController
         return false;
     }
 
-    public override bool GetSwapWeaponInput()
+    public override int GetSwapWeaponInput()
     {
-        if (Input.GetKeyDown(swapWeaponButton))
+        if (Input.GetKeyDown(swapWeaponButtonRight))
         {
-            return true;
+            return 1;
         }
-        return false;
+        else if (Input.GetKeyDown(swapWeaponButtonLeft))
+        {
+            return -1;
+        }
+        return 0;
     }
 
     public override bool GetShieldInput()

@@ -10,7 +10,7 @@ public abstract class PlayerController : MonoBehaviour
 
     public virtual bool GetStopFireInput() { return false; }
 
-    public virtual bool GetSwapWeaponInput() { return false; }
+    public virtual int GetSwapWeaponInput() { return 1; }
 
     public virtual bool GetShieldInput() { return false; }
 }
