@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -28,7 +29,14 @@ public class ProjectileObjectPool : MonoBehaviour
     {
         foreach (KeyValuePair<GameObject, ProjectileBaseBehaviour> entry in activeProjectiles)
         {
-            entry.Value.UpdateProjectileMovement();
+            try
+            {
+                entry.Value.UpdateProjectileMovement();
+            }
+            catch(InvalidOperationException e)
+            {
+                Debug.Log("Something came in the way of your update: " + e.ToString());
+            }
         }
     }
 
@@ -43,12 +51,10 @@ public class ProjectileObjectPool : MonoBehaviour
 
         if (instance.projectilePool.ContainsKey(behaviour.ProjectileType))
         {
-            Debug.Log("Projectile type Existed so this was added.");
             instance.projectilePool[behaviour.ProjectileType].Add(projectile);
         }
         else
         {
-            Debug.Log("No projectile of this type existed so a new objectPool was added");
             List<GameObject> newList = new List<GameObject>();
             newList.Add(projectile);
             instance.projectilePool.Add(behaviour.ProjectileType, newList);
@@ -62,9 +68,11 @@ public class ProjectileObjectPool : MonoBehaviour
             if(instance.projectilePool[type].Count > 0)
             {
                 GameObject projectile = instance.projectilePool[type][0];
+                ProjectileBaseBehaviour behaviour = projectile.GetComponent<ProjectileBaseBehaviour>();
                 projectile.SetActive(true);
                 instance.projectilePool[type].RemoveAt(0);
-                instance.activeProjectiles.Add(projectile, projectile.GetComponent<ProjectileBaseBehaviour>());
+                instance.activeProjectiles.Add(projectile, behaviour);
+                behaviour.ReActivate();
                 return projectile;
             }
 

@@ -111,5 +111,5 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 9ab9c85652bacd149ac891df1dabbfd0, type: 2}
   hitLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4096
   <ProjectileType>k__BackingField: 0

@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour, IDamageableObject
 {
-    [SerializeField] private bool MouseMovement = false;
-    [SerializeField] public List<PlayerController> controllers = new List<PlayerController>();
+    [SerializeField] private List<PlayerController> controllers = new List<PlayerController>();
+    [SerializeField] private PlayerStats stats = null;
+    [SerializeField] private Renderer playerMeshRenderer = null;
 
+    private bool MouseMovement = false;
     private bool active = false;
 
     private MovementBehaviour movementBehaviour = null;
@@ -13,13 +16,16 @@ public class PlayerBehaviour : MonoBehaviour, IDamageableObject
 
     private Vector3 direction = Vector3.zero;
     private PlayerController controller = null;
+    private float currentHealth;
+    private bool imortal = false;
 
     void Awake()
     {
         movementBehaviour = GetComponent<MovementBehaviour>();
         weaponBehaviour = GetComponent<PlayerWeaponBehaviour>();
+        movementBehaviour.MoveSpeed = stats.MovemtnSpeed;
+        currentHealth = stats.Health;
     }
-
 
     void Update()
     {
@@ -52,7 +58,9 @@ public class PlayerBehaviour : MonoBehaviour, IDamageableObject
 
         if (controller.GetShieldInput())
         {
-            UIController.ShieldActivated(5);
+            imortal = true;
+            StartCoroutine(ImmunityTimer(stats.ShieldDuration));
+            UIController.ShieldActivated(stats.ShieldCooldown);
         }
 
         if (Input.GetKeyDown(KeyCode.P))
@@ -66,7 +74,12 @@ public class PlayerBehaviour : MonoBehaviour, IDamageableObject
 
     public void TakeDamage(float damage)
     {
-
+        if (!imortal)
+        {
+            currentHealth -= damage;
+            UIController.UpdatePlayerHealth(damage);
+            StartCoroutine(ImmunityTimer(0.5f));
+        }
     }
 
     public void MouseController(bool status)
@@ -86,7 +99,25 @@ public class PlayerBehaviour : MonoBehaviour, IDamageableObject
         }
 
         active = true;
-        UIController.AssignPlayer(100f);
+        UIController.AssignPlayer(currentHealth);
         controller.AssingVariables(movementBehaviour, transform);
+    }
+
+    private IEnumerator ImmunityTimer(float timer)
+    {
+        float timePassed = 0f;
+        while (imortal)
+        {
+            timePassed += Time.deltaTime;
+
+            playerMeshRenderer.enabled = !playerMeshRenderer.enabled;
+
+            if (timePassed >= timer)
+            {
+                imortal = false;
+                playerMeshRenderer.enabled = true;
+            }
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
     }
 }

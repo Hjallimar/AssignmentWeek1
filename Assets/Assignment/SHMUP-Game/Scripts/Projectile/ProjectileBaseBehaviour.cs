@@ -9,11 +9,22 @@ public class ProjectileBaseBehaviour : MonoBehaviour
 
     protected RaycastHit hit;
     protected float distance = 0f;
+    protected float currentSpeed;
+
+    protected virtual void OnEnable()
+    {
+        currentSpeed = stats.MoveSpeed;
+    }
 
     public virtual void UpdateProjectileMovement()
     {
-        distance = stats.MoveSpeed * Time.deltaTime;
+        distance = currentSpeed * Time.deltaTime;
         CalculateColission();
+    }
+
+    public virtual void ReActivate()
+    {
+
     }
 
     protected virtual void TargetHit()
@@ -36,7 +47,7 @@ public class ProjectileBaseBehaviour : MonoBehaviour
         transform.position += transform.forward * distance;
     }
 
-    public void ReturnToPool()
+    public virtual void ReturnToPool()
     {
         ProjectileObjectPool.AddProjectileToPool(gameObject);
     }

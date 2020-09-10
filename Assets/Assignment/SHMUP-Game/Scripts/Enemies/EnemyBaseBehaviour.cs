@@ -7,6 +7,9 @@ public abstract class EnemyBaseBehaviour : MonoBehaviour, IDamageableObject
 {
     [SerializeField] protected EnemyStats stats;
     [SerializeField] protected LayerMask collisionLayers;
+
+    [SerializeField] protected bool addInStart = false;
+
     [field: SerializeField] public EnemyType Type { get; set; } = default;
     protected float currentHealth;
     protected float currentSpeed;
@@ -19,11 +22,15 @@ public abstract class EnemyBaseBehaviour : MonoBehaviour, IDamageableObject
     {
         hitCollider = GetComponent<SphereCollider>();
         ActivateObject();
+        if (addInStart)
+        {
+            EnemyObjectPool.AddMeToActive(gameObject);
+        }
     }
 
     public virtual void UpdateMovement() 
     {
-        distance = hitCollider.radius + (stats.Speed * Time.deltaTime);
+        distance = (stats.Speed * Time.deltaTime);
         CheckForCollision(distance);
     }
 
@@ -32,6 +39,7 @@ public abstract class EnemyBaseBehaviour : MonoBehaviour, IDamageableObject
         currentHealth -= dmg;
         if (currentHealth <= 0)
         {
+            UIController.UpdatePlayerScore(stats.Score);
             ReturnToObjectPool();
         }
     }
@@ -44,6 +52,7 @@ public abstract class EnemyBaseBehaviour : MonoBehaviour, IDamageableObject
             if (target != null)
             {
                 target.TakeDamage(currentHealth/3);
+                ReturnToObjectPool();
             }
         }
         else
@@ -51,8 +60,7 @@ public abstract class EnemyBaseBehaviour : MonoBehaviour, IDamageableObject
             transform.position += transform.forward * distance;
         }
     }
-
-    protected void ReturnToObjectPool()
+    public void ReturnToObjectPool()
     {
         EnemyObjectPool.AddEnemyToPool(gameObject);
     }

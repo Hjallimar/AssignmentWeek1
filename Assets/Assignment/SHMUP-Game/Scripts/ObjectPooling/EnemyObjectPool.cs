@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemyObjectPool : MonoBehaviour
@@ -28,6 +29,26 @@ public class EnemyObjectPool : MonoBehaviour
         }
     }
 
+    public static void AddMeToActive(GameObject newEnemy)
+    {
+        if (instance != null)
+        {
+            Debug.Log("Adding Enemy to active list: " + newEnemy.name);
+            EnemyBaseBehaviour enemyBehaviour = newEnemy.GetComponent<EnemyBaseBehaviour>();
+            if (enemyBehaviour != null)
+            {
+                if (instance.activeEnemies.ContainsKey(newEnemy))
+                {
+                    Debug.Log("Enemy is already active");
+                }
+                else
+                {
+                    instance.activeEnemies.Add(newEnemy, enemyBehaviour);
+                }
+            }
+        }
+    }
+
     public static void AddEnemyToPool(GameObject enemy)
     {
         EnemyBaseBehaviour behaviour = enemy.GetComponent<EnemyBaseBehaviour>();
@@ -39,12 +60,10 @@ public class EnemyObjectPool : MonoBehaviour
 
         if (instance.enemyPool.ContainsKey(behaviour.Type))
         {
-            Debug.Log("Projectile type Existed so this was added.");
             instance.enemyPool[behaviour.Type].Add(enemy);
         }
         else
         {
-            Debug.Log("No projectile of this type existed so a new objectPool was added");
             List<GameObject> newList = new List<GameObject>();
             newList.Add(enemy);
             instance.enemyPool.Add(behaviour.Type, newList);
@@ -71,6 +90,18 @@ public class EnemyObjectPool : MonoBehaviour
         {
             return instance.CreateNewEnemy(type);
         }
+    }
+
+    public static Transform GetActiveEnemy()
+    {
+        if (instance.activeEnemies.Count > 0)
+        {
+            foreach(KeyValuePair<GameObject, EnemyBaseBehaviour> entry in instance.activeEnemies)
+            {
+                return entry.Key.transform;
+            }
+        }
+        return null;
     }
 
     private GameObject CreateNewEnemy(EnemyType type)

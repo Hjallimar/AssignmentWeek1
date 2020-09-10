@@ -1,20 +1,37 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class HomingMissile : ProjectileBaseBehaviour
 {
+    [SerializeField] protected float accelerate = 5f;
+    [SerializeField] protected ParticleSystem particles = default;
     protected Transform target;
 
-    private void OnEnable()
+    public override void ReActivate()
     {
-        //Find that target bois;
+        particles.Play();
+        target = EnemyObjectPool.GetActiveEnemy();
     }
 
     public override void UpdateProjectileMovement()
     {
-
+        if (target != null)
+        {
+            if (!target.gameObject.activeSelf)
+            {
+                target = null;
+            }
+            else
+            {
+                transform.LookAt(target);
+            }
+        }
+        currentSpeed += accelerate * Time.deltaTime;
         base.UpdateProjectileMovement();
     }
 
+    public override void ReturnToPool()
+    {
+        particles.Stop();
+        base.ReturnToPool();
+    }
 }

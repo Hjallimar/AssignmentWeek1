@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScrriptableObject/Projectile Stats")]
+[CreateAssetMenu(menuName = "ScriptableObject/Projectile Stats")]
 public class ProjectileStats : ScriptableObject
 {
     [field: SerializeField] public float MoveSpeed { get; set; } = 10f;
