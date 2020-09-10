@@ -5,10 +5,10 @@ public class KeyboardController : PlayerController
     private MovementBehaviour movementBehaviour = null;
     Vector3 direction = Vector3.zero;
 
-    [SerializeField] private KeyCode fireButton;
-    [SerializeField] private KeyCode shieldButton;
-    [SerializeField] private KeyCode swapWeaponButtonRight;
-    [SerializeField] private KeyCode swapWeaponButtonLeft;
+    [SerializeField] private KeyCode fireButton = KeyCode.Space;
+    [SerializeField] private KeyCode shieldButton = KeyCode.Tab;
+    [SerializeField] private KeyCode swapWeaponButtonRight = KeyCode.E;
+    [SerializeField] private KeyCode swapWeaponButtonLeft = KeyCode.Q;
 
     public override void AssingVariables(MovementBehaviour move, Transform player)
     {

@@ -10,7 +10,7 @@ public class ProjectileObjectPool : MonoBehaviour
 
 
     [SerializeField] private List<GameObject> projectilePrefabs = new List<GameObject>();
-    private Dictionary<ProjectileBaseBehaviour.TypeOfProjectile, List<GameObject>> projectilePool = new Dictionary<ProjectileBaseBehaviour.TypeOfProjectile, List<GameObject>>();
+    private Dictionary<TypeOfProjectile, List<GameObject>> projectilePool = new Dictionary<TypeOfProjectile, List<GameObject>>();
 
     private Dictionary<GameObject, ProjectileBaseBehaviour> activeProjectiles = new Dictionary<GameObject, ProjectileBaseBehaviour>();
 
@@ -55,34 +55,34 @@ public class ProjectileObjectPool : MonoBehaviour
         }
     }
 
-    public static GameObject GetProjectile(ProjectileBaseBehaviour behaviour)
+    public static GameObject GetProjectile(TypeOfProjectile type)
     {
-        if (instance.projectilePool.ContainsKey(behaviour.ProjectileType))
+        if (instance.projectilePool.ContainsKey(type))
         {
-            if(instance.projectilePool[behaviour.ProjectileType].Count > 0)
+            if(instance.projectilePool[type].Count > 0)
             {
-                GameObject projectile = instance.projectilePool[behaviour.ProjectileType][0];
+                GameObject projectile = instance.projectilePool[type][0];
                 projectile.SetActive(true);
-                instance.projectilePool[behaviour.ProjectileType].RemoveAt(0);
+                instance.projectilePool[type].RemoveAt(0);
                 instance.activeProjectiles.Add(projectile, projectile.GetComponent<ProjectileBaseBehaviour>());
                 return projectile;
             }
 
-            return instance.CreateNewProjectile(behaviour);
+            return instance.CreateNewProjectile(type);
 
         }
         else
         {
-            return instance.CreateNewProjectile(behaviour);
+            return instance.CreateNewProjectile(type);
         }
     }
 
-    private GameObject CreateNewProjectile(ProjectileBaseBehaviour behaviour)
+    private GameObject CreateNewProjectile(TypeOfProjectile type)
     {
         foreach (GameObject projectile in instance.projectilePrefabs)
         {
             ProjectileBaseBehaviour prefabBehaviour = projectile.GetComponent<ProjectileBaseBehaviour>();
-            if (prefabBehaviour == behaviour)
+            if (prefabBehaviour.ProjectileType == type)
             {
                 GameObject newProjectile = Instantiate(projectile);
                 instance.activeProjectiles.Add(newProjectile, newProjectile.GetComponent<ProjectileBaseBehaviour>());

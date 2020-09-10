@@ -4,8 +4,6 @@ public class GameSupport : MonoBehaviour
 {
     private static GameSupport instance;
 
-    public static GameSupport Instance { get { return instance; } }
-
     private RaycastHit hit;
 
     [Header("Use this to limit the players movement on the screen")]
@@ -21,23 +19,16 @@ public class GameSupport : MonoBehaviour
         }
     }
 
-    public bool CheckSphereCast(SphereCollider collider, Vector3 direction, float distance, LayerMask layermask)
+    public static Vector3 ApplyCorrectPossition(Vector3 playerPos)
     {
-        if (Physics.SphereCast(collider.transform.position, collider.radius, direction, out hit, distance, layermask))
-        {
-            return true;
-        }
-        return false;
-    }
+        playerPos.x = playerPos.x < instance.topLeft.x ? instance.topLeft.x : (playerPos.x > instance.bottomRight.x ? instance.bottomRight.x : playerPos.x);
+        playerPos.y = playerPos.y > instance.topLeft.y ? instance.topLeft.y : (playerPos.y < instance.bottomRight.y ? instance.bottomRight.y : playerPos.y);
 
-    public void ApplyCorrectPossition(Transform playerTrans)
-    {
-        Vector3 newPos = playerTrans.position;
-
-        newPos.x = newPos.x < instance.topLeft.x ? instance.topLeft.x : (newPos.x > instance.bottomRight.x ? instance.bottomRight.x : newPos.x);
-        newPos.y = newPos.y > instance.topLeft.y ? instance.topLeft.y : (newPos.y < instance.bottomRight.y ? instance.bottomRight.y : newPos.y);
-
-        playerTrans.position = newPos;
+        return playerPos;
     }
 
 }
+
+public enum TypeOfProjectile { Lazer, Missile, Spread };
+
+public enum EnemyType { Simple, Waving, Charging, Shooting, Exploding };

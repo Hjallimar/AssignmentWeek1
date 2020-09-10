@@ -16,7 +16,7 @@ public class LazerWeapon : MonoBehaviour, IWeapon
 
     public void Fire()
     {
-        GameObject newBullet = ProjectileObjectPool.GetProjectile(projectileBehaviour);
+        GameObject newBullet = ProjectileObjectPool.GetProjectile(projectileBehaviour.ProjectileType);
         newBullet.transform.position = firePoint.position;
         newBullet.transform.rotation = firePoint.rotation;
     }

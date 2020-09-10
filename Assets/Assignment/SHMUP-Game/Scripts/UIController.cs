@@ -16,7 +16,8 @@ public class UIController : MonoBehaviour
 
     [Header("Main Menu components")]
     [SerializeField] private Toggle mouseController = null;
-    [SerializeField] private GameObject howToPlayPanel = null;
+    [SerializeField] private GameObject howToPlayMenu = null;
+    [SerializeField] private GameObject howToPlayIntro = null;
 
     [Header("Upper part of Game UI")]
     [SerializeField] private Text playerHealth = null;
@@ -48,6 +49,13 @@ public class UIController : MonoBehaviour
         Instance.bossSlider.gameObject.SetActive(false);
         Instance.bossName.text = "";
     }
+
+    public void ToggleHowToPlay(bool status)
+    {
+        howToPlayMenu.SetActive(status);
+    }
+
+
 
     public static void ChangeWeapon(int i)
     {
@@ -89,6 +97,7 @@ public class UIController : MonoBehaviour
 
     public void StartGame()
     {
+        ToggleHowToPlay(false);
         player.MouseController(mouseController.isOn);
         menuUIPanel.SetActive(false);
         StartCoroutine(ReminderHowToPlay());
@@ -97,14 +106,14 @@ public class UIController : MonoBehaviour
     IEnumerator ReminderHowToPlay()
     {
         Time.timeScale = 1;
-        howToPlayPanel.SetActive(true);
+        howToPlayIntro.SetActive(true);
         float timer = 0;
         while(timer < 5)
         {
             timer += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
-        howToPlayPanel.SetActive(false);
+        howToPlayIntro.SetActive(false);
     }
 
 

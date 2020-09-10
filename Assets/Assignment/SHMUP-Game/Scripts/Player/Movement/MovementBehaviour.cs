@@ -19,7 +19,7 @@ public class MovementBehaviour : MonoBehaviour
     public void MovePlayer(Vector3 direction)
     {
         myTransform.position += direction * MoveSpeed * Time.deltaTime;
-        GameSupport.Instance.ApplyCorrectPossition(transform);
+        myTransform.position = GameSupport.ApplyCorrectPossition(myTransform.position);
     }
 
     public void MoveTowards(Vector3 direction)
@@ -27,6 +27,6 @@ public class MovementBehaviour : MonoBehaviour
         if (direction.magnitude <= 0.1)
             return;
         myTransform.position += direction.normalized * MoveSpeed * Time.deltaTime;
-        GameSupport.Instance.ApplyCorrectPossition(transform);
+        myTransform.position = GameSupport.ApplyCorrectPossition(myTransform.position);
     }
 }

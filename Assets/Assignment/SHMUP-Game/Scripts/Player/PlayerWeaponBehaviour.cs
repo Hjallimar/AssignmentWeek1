@@ -36,17 +36,13 @@ public class PlayerWeaponBehaviour : MonoBehaviour
     {
         if (!weaponList.Contains(newWeapon))
         {
-            Debug.Log("New Weapon added " + newWeapon.ToString());
             weaponList.Add(newWeapon);
         }
-        else
-            Debug.Log("Weapon already exists");
     }
 
     public void SwapWeapon(int i)
     {
         weaponIndex += i;
-        Debug.Log("WeaponIndex is " + weaponIndex + ", the list holds " + weaponList.Count + " items" );
         if (weaponIndex > weaponList.Count - 1)
         {
             weaponIndex = 0;
@@ -55,7 +51,6 @@ public class PlayerWeaponBehaviour : MonoBehaviour
         {
             weaponIndex = weaponList.Count - 1;
         }
-        Debug.Log("Swapping weapon to the type " + weaponIndex);
         currentWeapon = weaponList[weaponIndex];
         weaponFireRate = currentWeapon.GetFireRate();
     }
@@ -64,7 +59,6 @@ public class PlayerWeaponBehaviour : MonoBehaviour
     {
         if (currentWeapon != null)
         {
-            Debug.Log("Starting Fire()");
             fireLoop = StartCoroutine(FiringWeapon());
         }
     }
@@ -73,7 +67,6 @@ public class PlayerWeaponBehaviour : MonoBehaviour
     {
         if (fireLoop != null )
         {
-            Debug.Log("Stopping Fire()");
             StopCoroutine(fireLoop);
         }
     }
@@ -85,7 +78,6 @@ public class PlayerWeaponBehaviour : MonoBehaviour
         {
             if (coolDown >= weaponFireRate)
             {
-                Debug.Log("Firing a bullet");
                 currentWeapon.Fire();
                 coolDown = 0;
             }

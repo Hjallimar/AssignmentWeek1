@@ -13,7 +13,7 @@ public class CharacterMovement : MonoBehaviour
 
     [SerializeField] private float maxDistance = 0f;
     [SerializeField] private float skinWidth = 0.01f;
-    [SerializeField] private CharacterData characterData;
+    [SerializeField] private CharacterData characterData = default;
 
     private Vector2 originalCapsuleSize = Vector2.zero;
 

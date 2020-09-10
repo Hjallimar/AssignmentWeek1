@@ -5,8 +5,6 @@ public class ProjectileBaseBehaviour : MonoBehaviour
     [SerializeField] protected ProjectileStats stats;
     [SerializeField] protected LayerMask hitLayers;
 
-    public enum TypeOfProjectile { Lazer, Missile, Spread };
-
     [field: SerializeField] public TypeOfProjectile ProjectileType { get; set; } = default; 
 
     protected RaycastHit hit;

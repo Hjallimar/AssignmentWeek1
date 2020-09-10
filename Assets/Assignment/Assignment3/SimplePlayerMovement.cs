@@ -11,7 +11,6 @@ public class SimplePlayerMovement : MonoBehaviour
     [SerializeField] private Transform myCamera = null;
     private Vector3 direction = Vector3.zero;
 
-    private float cameraAngle = 0f;
     // Update is called once per frame
     void Update()
     {

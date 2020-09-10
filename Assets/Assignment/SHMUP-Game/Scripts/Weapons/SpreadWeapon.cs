@@ -8,7 +8,6 @@ public class SpreadWeapon : MonoBehaviour, IWeapon
 
     private ProjectileBaseBehaviour projectileBehaviour;
 
-
     private void Awake()
     {
         PlayerWeaponBehaviour.AddWeapon(this);
@@ -19,7 +18,7 @@ public class SpreadWeapon : MonoBehaviour, IWeapon
     {
         foreach (Transform trans in firePoints)
         {
-            GameObject newBullet = ProjectileObjectPool.GetProjectile(projectileBehaviour);
+            GameObject newBullet = ProjectileObjectPool.GetProjectile(projectileBehaviour.ProjectileType);
             newBullet.transform.position = trans.position;
             newBullet.transform.rotation = trans.rotation;
         }
