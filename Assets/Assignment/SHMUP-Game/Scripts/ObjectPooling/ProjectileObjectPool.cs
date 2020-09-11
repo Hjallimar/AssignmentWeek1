@@ -8,7 +8,7 @@ public class ProjectileObjectPool : MonoBehaviour
 
     [SerializeField] private List<GameObject> projectilePrefabs = new List<GameObject>();
     private Dictionary<TypeOfProjectile, List<GameObject>> projectilePool = new Dictionary<TypeOfProjectile, List<GameObject>>();
-
+    private List<GameObject> removeFromActive = new List<GameObject>();
     private Dictionary<GameObject, ProjectileBaseBehaviour> activeProjectiles = new Dictionary<GameObject, ProjectileBaseBehaviour>();
 
     private void Awake()
@@ -23,6 +23,11 @@ public class ProjectileObjectPool : MonoBehaviour
 
     private void LateUpdate()
     {
+        foreach (GameObject go in removeFromActive)
+        {
+            instance.activeProjectiles.Remove(go);
+        }
+        removeFromActive.Clear();
         foreach (KeyValuePair<GameObject, ProjectileBaseBehaviour> entry in activeProjectiles)
         {
             UpdateProjectileMovementEventInfo Upmei = new UpdateProjectileMovementEventInfo(entry.Key, "Updating movement");
@@ -36,7 +41,7 @@ public class ProjectileObjectPool : MonoBehaviour
         projectile.SetActive(false);
         if (instance.activeProjectiles.ContainsKey(projectile))
         {
-            instance.activeProjectiles.Remove(projectile);
+            instance.removeFromActive.Add(projectile);
         }
 
         if (instance.projectilePool.ContainsKey(behaviour.ProjectileType))
@@ -51,7 +56,7 @@ public class ProjectileObjectPool : MonoBehaviour
         }
     }
 
-    public static GameObject GetProjectile(TypeOfProjectile type)
+    public static GameObject GetProjectile(TypeOfProjectile type, Transform location)
     {
         if (instance.projectilePool.ContainsKey(type))
         {
@@ -62,20 +67,22 @@ public class ProjectileObjectPool : MonoBehaviour
                 projectile.SetActive(true);
                 instance.projectilePool[type].RemoveAt(0);
                 instance.activeProjectiles.Add(projectile, behaviour);
+                projectile.transform.position = location.position;
+                projectile.transform.rotation = location.rotation;
                 behaviour.ReActivate();
                 return projectile;
             }
 
-            return instance.CreateNewProjectile(type);
+            return instance.CreateNewProjectile(type, location);
 
         }
         else
         {
-            return instance.CreateNewProjectile(type);
+            return instance.CreateNewProjectile(type, location);
         }
     }
 
-    private GameObject CreateNewProjectile(TypeOfProjectile type)
+    private GameObject CreateNewProjectile(TypeOfProjectile type, Transform location)
     {
         foreach (GameObject projectile in instance.projectilePrefabs)
         {
@@ -83,7 +90,11 @@ public class ProjectileObjectPool : MonoBehaviour
             if (prefabBehaviour.ProjectileType == type)
             {
                 GameObject newProjectile = Instantiate(projectile);
-                instance.activeProjectiles.Add(newProjectile, newProjectile.GetComponent<ProjectileBaseBehaviour>());
+                ProjectileBaseBehaviour behaviour = newProjectile.GetComponent<ProjectileBaseBehaviour>();
+                instance.activeProjectiles.Add(newProjectile, behaviour);
+                newProjectile.transform.position = location.position;
+                newProjectile.transform.rotation = location.rotation;
+                behaviour.ReActivate();
                 return newProjectile;
             }
         }

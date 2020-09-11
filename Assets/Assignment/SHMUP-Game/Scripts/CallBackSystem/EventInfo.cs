@@ -40,6 +40,13 @@ public class DefeatedEnemyEventInfo : EventInfo
     }
 }
 
+public class BossDefeatedEventInfo : EventInfo
+{
+    public BossDefeatedEventInfo(GameObject gO, string description) : base(gO, description)
+    {
+    }
+}
+
 public class SpawnProjectileEventInfo : EventInfo
 {
     public TypeOfProjectile ProjectileType { get; private set; }

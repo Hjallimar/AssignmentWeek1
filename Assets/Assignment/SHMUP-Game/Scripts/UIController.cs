@@ -27,6 +27,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private Text playerScore = null;
     [SerializeField] private Text bossName = null;
     [SerializeField] private Slider bossSlider = null;
+    [SerializeField] private Text announcecment = null;
 
     [Header("Lower part of Game UI")]
     [SerializeField] private Image shieldCooldown = null;
@@ -134,7 +135,7 @@ public class UIController : MonoBehaviour
 
     public static void UpdateWaveInfo(string text)
     {
-
+        instance.announcecment.text = text;
     }
 
     private static IEnumerator StartShieldCooldown()

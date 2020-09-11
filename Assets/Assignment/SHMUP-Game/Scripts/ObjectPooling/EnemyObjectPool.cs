@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ public class EnemyObjectPool : MonoBehaviour
 
     [SerializeField] private List<GameObject> enemiesPrefabs = new List<GameObject>();
     private Dictionary<EnemyType, List<GameObject>> enemyPool = new Dictionary<EnemyType, List<GameObject>>();
-
+    private List<GameObject> removeFromActive = new List<GameObject>();
     private Dictionary<GameObject, EnemyBaseBehaviour> activeEnemies = new Dictionary<GameObject, EnemyBaseBehaviour>();
 
     private void Awake()
@@ -23,6 +24,11 @@ public class EnemyObjectPool : MonoBehaviour
 
     private void Update()
     {
+        foreach (GameObject go in removeFromActive)
+        {
+            activeEnemies.Remove(go);
+        }
+        removeFromActive.Clear();
         foreach (KeyValuePair<GameObject, EnemyBaseBehaviour> entry in activeEnemies)
         {
             entry.Value.UpdateMovement();
@@ -55,7 +61,7 @@ public class EnemyObjectPool : MonoBehaviour
         enemy.SetActive(false);
         if (instance.activeEnemies.ContainsKey(enemy))
         {
-            instance.activeEnemies.Remove(enemy);
+            instance.removeFromActive.Add(enemy);
         }
 
         if (instance.enemyPool.ContainsKey(behaviour.Type))
@@ -80,9 +86,9 @@ public class EnemyObjectPool : MonoBehaviour
                 enemy.SetActive(true);
                 instance.enemyPool[type].RemoveAt(0);
                 instance.activeEnemies.Add(enemy, enemy.GetComponent<EnemyBaseBehaviour>());
+                Debug.Log("Activating enemy: " + enemy.name);
                 return enemy;
             }
-
             return instance.CreateNewEnemy(type);
 
         }
@@ -113,6 +119,7 @@ public class EnemyObjectPool : MonoBehaviour
             {
                 GameObject newEnemy = Instantiate(enemy);
                 instance.activeEnemies.Add(newEnemy, newEnemy.GetComponent<EnemyBaseBehaviour>());
+                Debug.Log("Activating enemy: " + enemy.name);
                 return newEnemy;
             }
         }

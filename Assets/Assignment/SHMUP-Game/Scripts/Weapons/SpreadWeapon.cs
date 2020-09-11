@@ -18,9 +18,7 @@ public class SpreadWeapon : MonoBehaviour, IWeapon
     {
         foreach (Transform trans in firePoints)
         {
-            GameObject newBullet = ProjectileObjectPool.GetProjectile(projectileBehaviour.ProjectileType);
-            newBullet.transform.position = trans.position;
-            newBullet.transform.rotation = trans.rotation;
+            GameObject newBullet = ProjectileObjectPool.GetProjectile(projectileBehaviour.ProjectileType, trans);
         }
     }
 

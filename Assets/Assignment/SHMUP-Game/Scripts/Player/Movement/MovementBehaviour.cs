@@ -4,21 +4,29 @@ using UnityEngine;
 
 public class MovementBehaviour : MonoBehaviour
 {
+    [SerializeField] private LayerMask collisonLayers = default;
     private Transform myTransform = null;
 
     public float MoveSpeed { get; set; } = 10.0f;
-
+    private SphereCollider coll;
 
     // Start is called before the first frame update
     void Awake()
     {
         myTransform = transform;
+        coll = GetComponent<SphereCollider>();
     }
 
 
     public void MovePlayer(Vector3 direction)
     {
-        myTransform.position += direction * MoveSpeed * Time.deltaTime;
+        float distance = MoveSpeed * Time.deltaTime;
+        RaycastHit hit;
+        if (!Physics.SphereCast(transform.position, coll.radius, direction, out hit, distance, collisonLayers))
+        {
+            myTransform.position += direction * distance;
+        }
+        
         myTransform.position = GameSupport.ApplyCorrectPossition(myTransform.position);
     }
 

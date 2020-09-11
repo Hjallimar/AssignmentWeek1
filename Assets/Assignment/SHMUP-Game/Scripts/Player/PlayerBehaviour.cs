@@ -76,6 +76,9 @@ public class PlayerBehaviour : MonoBehaviour, IDamageableObject
     {
         if (!imortal)
         {
+            damage = (int)damage;
+            if (damage < 1)
+                damage = 1;
             currentHealth -= damage;
             UIController.UpdatePlayerHealth(damage);
             StartCoroutine(ImmunityTimer(0.5f));
@@ -84,7 +87,6 @@ public class PlayerBehaviour : MonoBehaviour, IDamageableObject
 
     public void MouseController(bool status)
     {
-        Debug.Log("The status for mouse is " + status);
         MouseMovement = status;
         if (MouseMovement)
         {

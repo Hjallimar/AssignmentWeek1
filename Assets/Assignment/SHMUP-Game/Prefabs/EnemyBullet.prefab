@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2575330884004652175}
   - component: {fileID: 2575330884004652272}
   m_Layer: 10
-  m_Name: BaseBullet
+  m_Name: EnemyBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1090a6ae1dd21504483ca232b99bb45c, type: 2}
+  - {fileID: 2100000, guid: ad13032368e056f4fa5fc1ea9adafdcd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -111,5 +111,5 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 6fcf3342fe7444848b1bbcf6f0439bc8, type: 2}
   hitLayers:
     serializedVersion: 2
-    m_Bits: 4096
-  <ProjectileType>k__BackingField: 2
+    m_Bits: 8192
+  <ProjectileType>k__BackingField: 4

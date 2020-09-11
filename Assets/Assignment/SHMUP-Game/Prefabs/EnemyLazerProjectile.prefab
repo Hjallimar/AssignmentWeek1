@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2575330884004652172}
   - component: {fileID: 8595713265032899799}
   m_Layer: 10
-  m_Name: LazerProjectile
+  m_Name: EnemyLazerProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,10 +47,10 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 9ab9c85652bacd149ac891df1dabbfd0, type: 2}
   hitLayers:
     serializedVersion: 2
-    m_Bits: 4096
-  <ProjectileType>k__BackingField: 0
+    m_Bits: 8192
+  <ProjectileType>k__BackingField: 3
   particles: {fileID: 8705320088106343501}
-  delayBeforeFire: 0
+  delayBeforeFire: 0.3
 --- !u!1 &6467088290659795944
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,7 +273,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0, b: 0, a: 1}
+      maxColor: {r: 1, g: 0.49922687, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}

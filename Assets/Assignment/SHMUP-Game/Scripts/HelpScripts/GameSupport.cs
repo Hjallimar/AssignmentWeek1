@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.ComponentModel;
+using UnityEngine;
 
 public class GameSupport : MonoBehaviour
 {
@@ -19,6 +20,11 @@ public class GameSupport : MonoBehaviour
         }
     }
 
+    public static float GetLazerHitDistance(Vector3 origin)
+    {
+        return Mathf.Abs(origin.x - instance.bottomRight.x);
+    }
+
     public static Vector3 ApplyCorrectPossition(Vector3 playerPos)
     {
         playerPos.x = playerPos.x < instance.topLeft.x ? instance.topLeft.x : (playerPos.x > instance.bottomRight.x ? instance.bottomRight.x : playerPos.x);
@@ -29,6 +35,6 @@ public class GameSupport : MonoBehaviour
 
 }
 
-public enum TypeOfProjectile { Lazer, Missile, Spread };
+public enum TypeOfProjectile { Lazer, Missile, Spread, EnemyLazer, EnemyBullet };
 
 public enum EnemyType { Simple = 0, Waving = 1, Charging = 2, Shooting = 3, Exploding = 4, Boss = 5 };

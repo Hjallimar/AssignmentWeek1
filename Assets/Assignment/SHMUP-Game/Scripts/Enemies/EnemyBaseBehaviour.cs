@@ -58,17 +58,22 @@ public abstract class EnemyBaseBehaviour : MonoBehaviour, IDamageableObject
             transform.position += transform.forward * distance;
         }
     }
-    public void ReturnToObjectPool()
+    public virtual void ReturnToObjectPool()
     {
         DefeatedEnemyEventInfo Deei = new DefeatedEnemyEventInfo(gameObject, "I've have died");
         EventCoordinator.ActivateEvent(Deei);
         EnemyObjectPool.AddEnemyToPool(gameObject);
     }
 
-    public void ActivateObject()
+    public virtual void ActivateObject()
     {
         currentHealth = stats.Health;
         currentSpeed = stats.Speed;
+    }
+
+    public virtual void OnDestroy()
+    {
+
     }
 }
 
