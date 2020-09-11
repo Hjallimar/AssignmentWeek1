@@ -11,12 +11,26 @@ public class ProjectileBaseBehaviour : MonoBehaviour
     protected float distance = 0f;
     protected float currentSpeed;
 
+    protected virtual void Awake()
+    {
+        EventCoordinator.RegisterEventListener<UpdateProjectileMovementEventInfo>(UpdateProjectileMovement);
+    }
+
     protected virtual void OnEnable()
     {
         currentSpeed = stats.MoveSpeed;
     }
 
-    public virtual void UpdateProjectileMovement()
+    public virtual void UpdateProjectileMovement(EventInfo ei)
+    {
+        UpdateProjectileMovementEventInfo Upmei = (UpdateProjectileMovementEventInfo)ei;
+        if (ei.GO == gameObject)
+        {
+            CalculateMovement();
+        }
+    }
+
+    public virtual void CalculateMovement()
     {
         distance = currentSpeed * Time.deltaTime;
         CalculateColission();
@@ -52,5 +66,9 @@ public class ProjectileBaseBehaviour : MonoBehaviour
         ProjectileObjectPool.AddProjectileToPool(gameObject);
     }
 
+    protected virtual void OnDestroy()
+    {
+        EventCoordinator.UnregisterEventListener<UpdateProjectileMovementEventInfo>(UpdateProjectileMovement);
+    }
 
 }

@@ -31,4 +31,4 @@ public class GameSupport : MonoBehaviour
 
 public enum TypeOfProjectile { Lazer, Missile, Spread };
 
-public enum EnemyType { Simple, Waving, Charging, Shooting, Exploding };
+public enum EnemyType { Simple = 0, Waving = 1, Charging = 2, Shooting = 3, Exploding = 4, Boss = 5 };

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class ProjectileObjectPool : MonoBehaviour
@@ -25,18 +21,12 @@ public class ProjectileObjectPool : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         foreach (KeyValuePair<GameObject, ProjectileBaseBehaviour> entry in activeProjectiles)
         {
-            try
-            {
-                entry.Value.UpdateProjectileMovement();
-            }
-            catch(InvalidOperationException e)
-            {
-                Debug.Log("Something came in the way of your update: " + e.ToString());
-            }
+            UpdateProjectileMovementEventInfo Upmei = new UpdateProjectileMovementEventInfo(entry.Key, "Updating movement");
+            EventCoordinator.ActivateEvent(Upmei);
         }
     }
 

@@ -15,7 +15,10 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject menuUIPanel = null;
 
     [Header("Main Menu components")]
+    [SerializeField] private GameObject settingMenu = null;
     [SerializeField] private Toggle mouseController = null;
+    [SerializeField] private Toggle waveBased = null;
+
     [SerializeField] private GameObject howToPlayMenu = null;
     [SerializeField] private GameObject howToPlayIntro = null;
 
@@ -55,7 +58,10 @@ public class UIController : MonoBehaviour
         howToPlayMenu.SetActive(status);
     }
 
-
+    public void ToggleSettings(bool status)
+    {
+        settingMenu.SetActive(status);
+    }
 
     public static void ChangeWeapon(int i)
     {
@@ -114,8 +120,8 @@ public class UIController : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         howToPlayIntro.SetActive(false);
+        Spawner.ActivateSpawner(waveBased.isOn);
     }
-
 
     public static void ShieldActivated(float duration)
     {
@@ -124,6 +130,11 @@ public class UIController : MonoBehaviour
             Instance.durationCD = duration;
             Instance.StartCoroutine(StartShieldCooldown());
         }
+    }
+
+    public static void UpdateWaveInfo(string text)
+    {
+
     }
 
     private static IEnumerator StartShieldCooldown()

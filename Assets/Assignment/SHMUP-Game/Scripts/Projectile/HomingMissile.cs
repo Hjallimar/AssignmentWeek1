@@ -6,27 +6,29 @@ public class HomingMissile : ProjectileBaseBehaviour
     [SerializeField] protected ParticleSystem particles = default;
     protected Transform target;
 
+    protected override void Awake()
+    {
+        EventCoordinator.RegisterEventListener<UpdateProjectileMovementEventInfo>(UpdateProjectileMovement);
+        EventCoordinator.RegisterEventListener<DefeatedEnemyEventInfo>(OnEnemyDefeated);
+    }
+
     public override void ReActivate()
     {
         particles.Play();
         target = EnemyObjectPool.GetActiveEnemy();
     }
 
-    public override void UpdateProjectileMovement()
+    public override void UpdateProjectileMovement(EventInfo ei)
     {
-        if (target != null)
+        if(ei.GO == gameObject)
         {
-            if (!target.gameObject.activeSelf)
-            {
-                target = null;
-            }
-            else
+            if (target != null)
             {
                 transform.LookAt(target);
             }
+            currentSpeed += accelerate * Time.deltaTime;
+            CalculateMovement();
         }
-        currentSpeed += accelerate * Time.deltaTime;
-        base.UpdateProjectileMovement();
     }
 
     public override void ReturnToPool()
@@ -34,4 +36,19 @@ public class HomingMissile : ProjectileBaseBehaviour
         particles.Stop();
         base.ReturnToPool();
     }
+
+    public void OnEnemyDefeated(EventInfo ei)
+    {
+        if (ei.GO.transform == target)
+        {
+            target = null;
+        }
+    }
+
+    protected override void OnDestroy()
+    {
+        EventCoordinator.UnregisterEventListener<UpdateProjectileMovementEventInfo>(UpdateProjectileMovement);
+        EventCoordinator.UnregisterEventListener<DefeatedEnemyEventInfo>(OnEnemyDefeated);
+    }
+
 }

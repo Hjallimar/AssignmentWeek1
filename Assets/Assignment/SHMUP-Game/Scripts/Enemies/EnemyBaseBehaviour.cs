@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(SphereCollider))]
 public abstract class EnemyBaseBehaviour : MonoBehaviour, IDamageableObject
@@ -62,6 +60,8 @@ public abstract class EnemyBaseBehaviour : MonoBehaviour, IDamageableObject
     }
     public void ReturnToObjectPool()
     {
+        DefeatedEnemyEventInfo Deei = new DefeatedEnemyEventInfo(gameObject, "I've have died");
+        EventCoordinator.ActivateEvent(Deei);
         EnemyObjectPool.AddEnemyToPool(gameObject);
     }
 
