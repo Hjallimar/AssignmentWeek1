@@ -2090,6 +2090,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemiesPrefabs:
   - {fileID: 2761196133809944442, guid: d26bdfbe190a1e946801c1a267346db0, type: 3}
+  - {fileID: 4329232938984665040, guid: d504b597359bff14f817e4ed538bbf41, type: 3}
 --- !u!1 &899139314
 GameObject:
   m_ObjectHideFlags: 0
@@ -4947,7 +4948,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wavePrefabs:
   - {fileID: 1113889885}
-  - {fileID: 4329232938984665040, guid: d504b597359bff14f817e4ed538bbf41, type: 3}
   RandomizedSpawn: 1
   spawnPoints:
   - {fileID: 2098211241}
