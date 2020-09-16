@@ -5,7 +5,6 @@ public class ProjectileObjectPool : MonoBehaviour
 {
     private static ProjectileObjectPool instance;
 
-
     [SerializeField] private List<GameObject> projectilePrefabs = new List<GameObject>();
     private Dictionary<TypeOfProjectile, List<GameObject>> projectilePool = new Dictionary<TypeOfProjectile, List<GameObject>>();
     private List<GameObject> removeFromActive = new List<GameObject>();
@@ -13,6 +12,8 @@ public class ProjectileObjectPool : MonoBehaviour
 
     private void Awake()
     {
+        EventCoordinator.RegisterEventListener<ResetGameEventInfo>(ResetGame);
+
         if (instance == null)
         {
             instance = this;
@@ -112,6 +113,26 @@ public class ProjectileObjectPool : MonoBehaviour
                 GameObject newProjectile = Instantiate(projectile);
                 AddProjectileToPool(newProjectile);
             }
+        }
+    }
+
+    public void OnDestroy()
+    {
+        EventCoordinator.UnregisterEventListener<ResetGameEventInfo>(ResetGame);
+    }
+
+    private static void ResetGame(EventInfo ei)
+    {
+        foreach (KeyValuePair<GameObject, ProjectileBaseBehaviour> entry in instance.activeProjectiles)
+        {
+            if (!instance.removeFromActive.Contains(entry.Key))
+            {
+                instance.removeFromActive.Add(entry.Key);
+            }
+        }
+        foreach (GameObject go in instance.removeFromActive)
+        {
+            instance.activeProjectiles.Remove(go);
         }
     }
 }

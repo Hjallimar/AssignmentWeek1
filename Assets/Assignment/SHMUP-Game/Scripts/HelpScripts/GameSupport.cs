@@ -33,8 +33,26 @@ public class GameSupport : MonoBehaviour
         return playerPos;
     }
 
+    public static bool CheckMyYAxis(Transform checkTrans)
+    {
+        Vector3 newPos = checkTrans.position;
+        if (checkTrans.position.y < instance.bottomRight.y)
+        {
+            newPos.y = instance.bottomRight.y;
+            checkTrans.position = newPos;
+            return true;
+        }
+        else if (checkTrans.position.y > instance.topLeft.y)
+        {
+            newPos.y = instance.topLeft.y;
+            checkTrans.position = newPos;
+            return true;
+        }
+        return false;
+    }
+
 }
 
 public enum TypeOfProjectile { Lazer, Missile, Spread, EnemyLazer, EnemyBullet };
 
-public enum EnemyType { Simple = 0, Waving = 1, Charging = 2, Shooting = 3, Exploding = 4, Boss = 5 };
+public enum EnemyType { Simple = 0, Mine = 1, Waving = 2, Charging = 3, Shooting = 4, Exploding = 5, Boss = 6 };

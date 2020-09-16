@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(SphereCollider))]
-public abstract class EnemyBaseBehaviour : MonoBehaviour, IDamageableObject
+public abstract class EnemyBaseBehaviour : MonoBehaviour, IDamageableObject, IEnemy
 {
     [SerializeField] protected EnemyStats stats;
     [SerializeField] protected LayerMask collisionLayers;
-
     [SerializeField] protected bool addInStart = false;
 
     [field: SerializeField] public EnemyType Type { get; set; } = default;
@@ -15,6 +14,7 @@ public abstract class EnemyBaseBehaviour : MonoBehaviour, IDamageableObject
 
     protected float distance = 0f;
     protected RaycastHit hit;
+    protected bool activeStatus = false; 
 
     protected virtual void Awake()
     {
@@ -74,6 +74,11 @@ public abstract class EnemyBaseBehaviour : MonoBehaviour, IDamageableObject
     public virtual void OnDestroy()
     {
 
+    }
+
+    public virtual void SetActive(bool status)
+    {
+        activeStatus = status;
     }
 }
 

@@ -21,6 +21,7 @@ public class PlayerBehaviour : MonoBehaviour, IDamageableObject
 
     void Awake()
     {
+        EventCoordinator.RegisterEventListener<ResetGameEventInfo>(ResetGame);
         movementBehaviour = GetComponent<MovementBehaviour>();
         weaponBehaviour = GetComponent<PlayerWeaponBehaviour>();
         movementBehaviour.MoveSpeed = stats.MovemtnSpeed;
@@ -81,7 +82,16 @@ public class PlayerBehaviour : MonoBehaviour, IDamageableObject
                 damage = 1;
             currentHealth -= damage;
             UIController.UpdatePlayerHealth(damage);
-            StartCoroutine(ImmunityTimer(0.5f));
+
+            if (currentHealth < 0)
+            {
+                ResetGameEventInfo Rgei = new ResetGameEventInfo(gameObject, "Player Has died");
+                EventCoordinator.ActivateEvent(Rgei);
+            }
+            else
+            {
+                StartCoroutine(ImmunityTimer(0.5f));
+            }
         }
     }
 
@@ -119,7 +129,19 @@ public class PlayerBehaviour : MonoBehaviour, IDamageableObject
                 imortal = false;
                 playerMeshRenderer.enabled = true;
             }
-            yield return new WaitForSeconds(Time.deltaTime);
+            yield return new WaitForSeconds(Time.deltaTime * 3f);
         }
+    }
+
+    public void OnDestroy()
+    {
+
+        EventCoordinator.UnregisterEventListener<ResetGameEventInfo>(ResetGame);
+    }
+
+    public void ResetGame(EventInfo ei)
+    {
+        active = false;
+        currentHealth = stats.Health;
     }
 }

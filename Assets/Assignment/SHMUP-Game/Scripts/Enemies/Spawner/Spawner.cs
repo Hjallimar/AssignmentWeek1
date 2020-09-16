@@ -31,14 +31,17 @@ public class Spawner : MonoBehaviour
     private float timeCounter = 0f;
     private int currentWave = 0;
 
+    private Coroutine waveSpawner;
+
+
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
         }
-
         EventCoordinator.RegisterEventListener<BossDefeatedEventInfo>(BossDefeated);
+        EventCoordinator.RegisterEventListener<ResetGameEventInfo>(ResetGame);
     }
 
     void Update()
@@ -120,7 +123,6 @@ public class Spawner : MonoBehaviour
     public static void StartNewWave(float wait)
     {
         instance.StartCoroutine(WaitForNewWave(wait));
-
     }
 
     public static void BossDefeated(EventInfo ei)
@@ -156,6 +158,12 @@ public class Spawner : MonoBehaviour
     private static void OnDestroy()
     {
         EventCoordinator.UnregisterEventListener<BossDefeatedEventInfo>(BossDefeated);
+        EventCoordinator.UnregisterEventListener<ResetGameEventInfo>(ResetGame);
     }
 
+
+    public static void ResetGame(EventInfo ei)
+    {
+
+    }
 }

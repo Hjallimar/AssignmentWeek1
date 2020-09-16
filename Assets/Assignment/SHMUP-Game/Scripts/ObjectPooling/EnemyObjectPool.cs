@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 using UnityEngine;
 
 public class EnemyObjectPool : MonoBehaviour
@@ -14,6 +12,8 @@ public class EnemyObjectPool : MonoBehaviour
 
     private void Awake()
     {
+        EventCoordinator.RegisterEventListener<ResetGameEventInfo>(ResetGame);
+
         if (instance == null)
         {
             instance = this;
@@ -137,6 +137,27 @@ public class EnemyObjectPool : MonoBehaviour
                 GameObject newEnemy = Instantiate(enemy);
                 AddEnemyToPool(newEnemy);
             }
+        }
+    }
+
+    public void OnDestroy()
+    {
+        EventCoordinator.UnregisterEventListener<ResetGameEventInfo>(ResetGame);
+    }
+
+    private static void ResetGame(EventInfo ei)
+    {
+        foreach(KeyValuePair<GameObject, EnemyBaseBehaviour> entry in instance.activeEnemies)
+        {
+            if (!instance.removeFromActive.Contains(entry.Key))
+            {
+                entry.Value.SetActive(false);
+                instance.removeFromActive.Add(entry.Key);
+            }
+        }
+        foreach (GameObject go in instance.removeFromActive)
+        {
+            instance.activeEnemies.Remove(go);
         }
     }
 }

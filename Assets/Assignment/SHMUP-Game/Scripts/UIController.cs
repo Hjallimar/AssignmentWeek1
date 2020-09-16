@@ -11,7 +11,6 @@ public class UIController : MonoBehaviour
     [SerializeField] private PlayerBehaviour player = null;
 
     [Header("The diferent main panels")]
-    [SerializeField] private GameObject gameUIPanel = null;
     [SerializeField] private GameObject menuUIPanel = null;
 
     [Header("Main Menu components")]
@@ -49,7 +48,7 @@ public class UIController : MonoBehaviour
         }
 
         Time.timeScale = 0;
-
+        EventCoordinator.RegisterEventListener<ResetGameEventInfo>(ResetGame);
         Instance.bossSlider.gameObject.SetActive(false);
         Instance.bossName.text = "";
     }
@@ -190,5 +189,12 @@ public class UIController : MonoBehaviour
         Instance.bossSlider.maxValue = maxHp;
         Instance.bossSlider.value = maxHp;
         Instance.bossSlider.minValue = 0;
+    }
+
+    public static void ResetGame(EventInfo ei)
+    {
+        Instance.bossSlider.gameObject.SetActive(false);
+        Instance.bossName.text = "";
+        Instance.menuUIPanel.SetActive(true);
     }
 }

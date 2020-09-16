@@ -65,3 +65,10 @@ public class UpdateProjectileMovementEventInfo : EventInfo
     }
 }
 
+public class ResetGameEventInfo : EventInfo
+{
+    public ResetGameEventInfo(GameObject gO, string description) : base(gO, description)
+    {
+    }
+}
+

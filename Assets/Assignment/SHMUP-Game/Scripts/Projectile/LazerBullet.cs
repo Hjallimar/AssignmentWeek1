@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class LazerBullet : ProjectileBaseBehaviour
 {
-    [SerializeField] private ParticleSystem particles;
+    [SerializeField] private ParticleSystem particles = null;
     [SerializeField] private float delayBeforeFire = 0f;
-    protected RaycastHit[] hit = new RaycastHit[0];
+    protected RaycastHit[] hits = new RaycastHit[0];
     private float rayDistance;
 
     public override void UpdateProjectileMovement(EventInfo ei)
@@ -21,10 +20,10 @@ public class LazerBullet : ProjectileBaseBehaviour
     protected virtual void FireLazer()
     {
         rayDistance = GameSupport.GetLazerHitDistance(transform.position);
-        hit = Physics.RaycastAll(transform.position, transform.forward, rayDistance, hitLayers);
-        if(hit.Length != 0)
+        hits = Physics.RaycastAll(transform.position, transform.forward, rayDistance, hitLayers);
+        if(hits.Length != 0)
         {
-            foreach (RaycastHit target in hit)
+            foreach (RaycastHit target in hits)
             {
                 IDamageableObject targetHit = target.collider.GetComponent<IDamageableObject>();
                 if (targetHit != null)
@@ -38,6 +37,7 @@ public class LazerBullet : ProjectileBaseBehaviour
     protected virtual IEnumerator ShowRay()
     {
         float timer = 0;
+
         while (timer < delayBeforeFire)
         {
             timer += Time.deltaTime;

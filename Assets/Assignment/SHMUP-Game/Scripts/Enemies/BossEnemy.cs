@@ -1,41 +1,50 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BossEnemy : EnemyBaseBehaviour
 {
-    [SerializeField] private Transform[] firePoints = new Transform[0];
+    [SerializeField] private Transform firePoint = null;
     [SerializeField] private float maxTravel = 6f;
     [SerializeField] private string bossName = "";
-    [SerializeField] private GameObject primary;
-    [SerializeField] private GameObject secondary;
+    [SerializeField] private GameObject primary = null;
 
-    private ProjectileBaseBehaviour primaryFire;
-    private ProjectileBaseBehaviour secondaryFire;
+    [SerializeField] private float ammountOfBullets = 8f;
+    [SerializeField] private float spreadFireAngle = 5f;
+
+    private ProjectileBaseBehaviour primaryFire = null;
 
     [SerializeField] private float TimeBetweenAttacks = 3f;
 
     private bool imortal = true;
-    protected bool primaryProjectile = true;
     protected Coroutine firePatrol;
+    protected int directionMultiplier = 1;
 
     protected override void Awake()
     {
         primaryFire = primary.GetComponent<ProjectileBaseBehaviour>();
-        secondaryFire = secondary.GetComponent<ProjectileBaseBehaviour>();
         base.Awake();
+    }
+
+    public override void SetActive(bool status)
+    {
+        imortal = !status;
+        UIController.AssignBoss(bossName, currentHealth);
+        firePatrol = StartCoroutine(FireWeapons());
+        base.SetActive(status);
     }
 
     public override void UpdateMovement()
     {
-        if (imortal)
+        if(transform.position.x < maxTravel)
         {
-            if(transform.position.x < maxTravel)
+            transform.position += Vector3.up * directionMultiplier * (currentSpeed * 0.3f) * Time.deltaTime; 
+            if (GameSupport.CheckMyYAxis(transform))
             {
-                imortal = false;
-                UIController.AssignBoss(bossName, currentHealth);
-                firePatrol = StartCoroutine(FireWeapons());
+                directionMultiplier *= -1;
             }
+        }
+        else
+        {
             base.UpdateMovement();
         }
     }
@@ -44,6 +53,7 @@ public class BossEnemy : EnemyBaseBehaviour
     {
         if (!imortal)
         {
+            UIController.UpdateBossHealth(dmg);
             base.TakeDamage(dmg);
         }
     }
@@ -51,7 +61,6 @@ public class BossEnemy : EnemyBaseBehaviour
     public override void ActivateObject()
     {
         imortal = true;
-        primaryProjectile = true;
         base.ActivateObject();
     }
 
@@ -63,13 +72,6 @@ public class BossEnemy : EnemyBaseBehaviour
         EnemyObjectPool.AddEnemyToPool(gameObject);
     }
 
-    protected void ChangeFire()
-    {
-        StopFire();
-        primaryProjectile = !primaryProjectile;
-        firePatrol = StartCoroutine(FireWeapons());
-    }
-
     protected void StopFire()
     {
         StopCoroutine(firePatrol);
@@ -79,44 +81,22 @@ public class BossEnemy : EnemyBaseBehaviour
     {
         float timer = 0f;
         int counter = 0;
-        if (primaryProjectile)
+        while (true)
         {
-            while (primaryProjectile)
+            timer += Time.deltaTime;
+            if (timer >= TimeBetweenAttacks)
             {
-                timer += Time.deltaTime;
-                if (timer >= TimeBetweenAttacks)
+                float totalAngle = (spreadFireAngle * ammountOfBullets) * 0.5f;
+                for (int i = 0; i < ammountOfBullets; i++)
                 {
-                    foreach (Transform trans in firePoints)
-                    {
-                        GameObject projectile = ProjectileObjectPool.GetProjectile(primaryFire.ProjectileType, trans);
-                    }
-                    timer = 0;
-                    counter++;
+                    firePoint.localRotation = Quaternion.Euler(totalAngle, 0, 0);
+                    totalAngle -= spreadFireAngle;
+                    ProjectileObjectPool.GetProjectile(primaryFire.ProjectileType, firePoint);
                 }
-                if(counter >= 3)
-                {
-                    ChangeFire();
-                }
-                yield return new WaitForSeconds(Time.deltaTime);
+                timer = 0;
+                counter++;
             }
-        }
-        else
-        {
-            while (true)
-            {
-                float laserTimer = 0;
-                foreach (Transform trans in firePoints)
-                {
-                    while (laserTimer < 0.5f)
-                    {
-                        laserTimer += Time.deltaTime;
-                        yield return new WaitForSeconds(Time.deltaTime);
-                    }
-                    GameObject projectile = ProjectileObjectPool.GetProjectile(secondaryFire.ProjectileType, trans);
-                }
-                ChangeFire();
-            }
-
+            yield return new WaitForSeconds(Time.deltaTime);
         }
     }
 }
