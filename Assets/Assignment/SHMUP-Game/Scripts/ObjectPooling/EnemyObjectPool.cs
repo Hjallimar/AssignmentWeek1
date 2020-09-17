@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyObjectPool : MonoBehaviour
@@ -22,16 +23,27 @@ public class EnemyObjectPool : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         foreach (GameObject go in removeFromActive)
         {
             activeEnemies.Remove(go);
         }
         removeFromActive.Clear();
-        foreach (KeyValuePair<GameObject, EnemyBaseBehaviour> entry in activeEnemies)
+
+        if (activeEnemies.Count > 0)
         {
-            entry.Value.UpdateMovement();
+            try
+            {
+                foreach (KeyValuePair<GameObject, EnemyBaseBehaviour> entry in activeEnemies)
+                {
+                    entry.Value.UpdateMovement();
+                }
+            }
+            catch (InvalidOperationException e)
+            {
+                Debug.Log("You have recived a " + e.ToString());
+            }
         }
     }
 
@@ -74,6 +86,7 @@ public class EnemyObjectPool : MonoBehaviour
             newList.Add(enemy);
             instance.enemyPool.Add(behaviour.Type, newList);
         }
+        behaviour.SetActive(false);
     }
 
     public static GameObject GetEnemy(EnemyType type)
@@ -86,7 +99,6 @@ public class EnemyObjectPool : MonoBehaviour
                 enemy.SetActive(true);
                 instance.enemyPool[type].RemoveAt(0);
                 instance.activeEnemies.Add(enemy, enemy.GetComponent<EnemyBaseBehaviour>());
-                Debug.Log("Activating enemy: " + enemy.name);
                 return enemy;
             }
             return instance.CreateNewEnemy(type);
@@ -119,7 +131,6 @@ public class EnemyObjectPool : MonoBehaviour
             {
                 GameObject newEnemy = Instantiate(enemy);
                 instance.activeEnemies.Add(newEnemy, newEnemy.GetComponent<EnemyBaseBehaviour>());
-                Debug.Log("Activating enemy: " + enemy.name);
                 return newEnemy;
             }
         }
@@ -149,15 +160,11 @@ public class EnemyObjectPool : MonoBehaviour
     {
         foreach(KeyValuePair<GameObject, EnemyBaseBehaviour> entry in instance.activeEnemies)
         {
-            if (!instance.removeFromActive.Contains(entry.Key))
-            {
-                entry.Value.SetActive(false);
-                instance.removeFromActive.Add(entry.Key);
-            }
+            AddEnemyToPool(entry.Key);
+            
         }
-        foreach (GameObject go in instance.removeFromActive)
-        {
-            instance.activeEnemies.Remove(go);
-        }
+        
+        instance.removeFromActive.Clear();
+        instance.activeEnemies.Clear();
     }
 }

@@ -41,7 +41,7 @@ public class HomingMissile : ProjectileBaseBehaviour
     {
         if (ei.GO.transform == target)
         {
-            Debug.Log("Got it");
+            Debug.Log(gameObject.name + " got it, removing " + ei.GO.name + " as target");
             target = null;
         }
     }

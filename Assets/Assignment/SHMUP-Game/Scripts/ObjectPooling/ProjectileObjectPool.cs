@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ProjectileObjectPool : MonoBehaviour
@@ -29,10 +30,20 @@ public class ProjectileObjectPool : MonoBehaviour
             instance.activeProjectiles.Remove(go);
         }
         removeFromActive.Clear();
-        foreach (KeyValuePair<GameObject, ProjectileBaseBehaviour> entry in activeProjectiles)
+        if (activeProjectiles.Count > 0)
         {
-            UpdateProjectileMovementEventInfo Upmei = new UpdateProjectileMovementEventInfo(entry.Key, "Updating movement");
-            EventCoordinator.ActivateEvent(Upmei);
+            try
+            {
+                foreach (KeyValuePair<GameObject, ProjectileBaseBehaviour> entry in activeProjectiles)
+                {
+                    UpdateProjectileMovementEventInfo Upmei = new UpdateProjectileMovementEventInfo(entry.Key, "Updating movement");
+                    EventCoordinator.ActivateEvent(Upmei);
+                }
+            }
+            catch (InvalidOperationException e)
+            {
+                Debug.Log("You have recived a " + e.ToString());
+            }
         }
     }
 
@@ -125,14 +136,10 @@ public class ProjectileObjectPool : MonoBehaviour
     {
         foreach (KeyValuePair<GameObject, ProjectileBaseBehaviour> entry in instance.activeProjectiles)
         {
-            if (!instance.removeFromActive.Contains(entry.Key))
-            {
-                instance.removeFromActive.Add(entry.Key);
-            }
+            AddProjectileToPool(entry.Key);
         }
-        foreach (GameObject go in instance.removeFromActive)
-        {
-            instance.activeProjectiles.Remove(go);
-        }
+
+        instance.activeProjectiles.Clear();
+        instance.removeFromActive.Clear();
     }
 }

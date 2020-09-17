@@ -15,6 +15,7 @@ public class PlayerBehaviour : MonoBehaviour, IDamageableObject
     private PlayerWeaponBehaviour weaponBehaviour = null;
 
     private Vector3 direction = Vector3.zero;
+    private Vector3 startPosition = Vector3.zero;
     private PlayerController controller = null;
     private float currentHealth;
     private bool imortal = false;
@@ -26,6 +27,7 @@ public class PlayerBehaviour : MonoBehaviour, IDamageableObject
         weaponBehaviour = GetComponent<PlayerWeaponBehaviour>();
         movementBehaviour.MoveSpeed = stats.MovemtnSpeed;
         currentHealth = stats.Health;
+        startPosition = transform.position;
     }
 
     void Update()
@@ -53,7 +55,6 @@ public class PlayerBehaviour : MonoBehaviour, IDamageableObject
         if (controller.GetSwapWeaponInput() != 0)
         {
             UIController.ChangeWeapon(controller.GetSwapWeaponInput());
-            Debug.Log("Swaping Weapons");
             weaponBehaviour.SwapWeapon(controller.GetSwapWeaponInput());
         }
 
@@ -143,5 +144,8 @@ public class PlayerBehaviour : MonoBehaviour, IDamageableObject
     {
         active = false;
         currentHealth = stats.Health;
+        transform.position = startPosition;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }

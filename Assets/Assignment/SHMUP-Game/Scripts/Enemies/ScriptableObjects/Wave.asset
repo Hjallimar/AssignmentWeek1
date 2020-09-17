@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Wave
   m_EditorClassIdentifier: 
   <Health>k__BackingField: 5
-  <Speed>k__BackingField: 10
+  <ActiveSpeed>k__BackingField: 6
   <Score>k__BackingField: 15
+  <Damage>k__BackingField: 10

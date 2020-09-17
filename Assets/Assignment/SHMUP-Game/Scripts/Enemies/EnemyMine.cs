@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Internal;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyMine : EnemyBaseBehaviour
 {
-    [SerializeField] private Transform rotationArm;
-    [SerializeField] private Transform firePoint;
-    [SerializeField] private GameObject projectile;
+    [SerializeField] private Transform rotationArm = null;
+    [SerializeField] private Transform firePoint = null;
+    [SerializeField] private GameObject projectile = null;
     [SerializeField] private float rotationSpeed = 45f; 
     [SerializeField] private float timeBetweenFire = 0.3f;
 

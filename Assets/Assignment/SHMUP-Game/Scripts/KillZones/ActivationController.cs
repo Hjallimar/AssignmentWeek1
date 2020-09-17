@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ActivationController : MonoBehaviour
 {
@@ -10,6 +8,7 @@ public class ActivationController : MonoBehaviour
         IEnemy enemy = other.GetComponent<IEnemy>();
         if (enemy != null)
         {
+            Debug.Log("Activating enemy: " + other.name);
             enemy.SetActive(activationStatus);
         }
     }

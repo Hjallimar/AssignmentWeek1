@@ -104,7 +104,7 @@ public class Spawner : MonoBehaviour
             foreach (GameObject gO in instance.wavePrefabs)
             {
                 IWave behaviour = gO.GetComponent<IWave>();
-                if (behaviour != null)
+                if (behaviour != null && !instance.waves.ContainsKey(gO))
                 {
                     instance.waves.Add(gO, behaviour);
                 }
@@ -164,6 +164,9 @@ public class Spawner : MonoBehaviour
 
     public static void ResetGame(EventInfo ei)
     {
-
+        instance.spawnable = false;
+        instance.currentWave = 0;
+        instance.spawnCounter = 0;
+        instance.timeCounter = 0;
     }
 }

@@ -24,11 +24,12 @@ public abstract class EnemyBaseBehaviour : MonoBehaviour, IDamageableObject, IEn
         {
             EnemyObjectPool.AddMeToActive(gameObject);
         }
+        currentSpeed = stats.NonActiveSpeed;
     }
 
     public virtual void UpdateMovement() 
     {
-        distance = (stats.Speed * Time.deltaTime);
+        distance = (currentSpeed * Time.deltaTime);
         CheckForCollision(distance);
     }
 
@@ -68,7 +69,7 @@ public abstract class EnemyBaseBehaviour : MonoBehaviour, IDamageableObject, IEn
     public virtual void ActivateObject()
     {
         currentHealth = stats.Health;
-        currentSpeed = stats.Speed;
+        currentSpeed = stats.NonActiveSpeed;
     }
 
     public virtual void OnDestroy()
@@ -78,7 +79,17 @@ public abstract class EnemyBaseBehaviour : MonoBehaviour, IDamageableObject, IEn
 
     public virtual void SetActive(bool status)
     {
+        float oldspeed = currentSpeed;
+        if (status)
+        {
+            currentSpeed = stats.ActiveSpeed;
+        }
+        else
+        {
+            currentSpeed = stats.NonActiveSpeed;
+        }
         activeStatus = status;
+        Debug.Log("Changing speed from " + oldspeed + " to " + currentSpeed);
     }
 }
 

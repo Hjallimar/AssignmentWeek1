@@ -39,6 +39,15 @@ public class UIController : MonoBehaviour
     float currentScore;
     float bossHealth;
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && Time.timeScale != 0)
+        {
+            ResetGameEventInfo Rgei = new ResetGameEventInfo(null, "Escape has been pressed");
+            EventCoordinator.ActivateEvent(Rgei);
+        }
+    }
+
 
     private void Awake()
     {
@@ -196,5 +205,6 @@ public class UIController : MonoBehaviour
         Instance.bossSlider.gameObject.SetActive(false);
         Instance.bossName.text = "";
         Instance.menuUIPanel.SetActive(true);
+        Time.timeScale = 0;
     }
 }

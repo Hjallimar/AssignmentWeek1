@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Simple
   m_EditorClassIdentifier: 
   <Health>k__BackingField: 5
-  <Speed>k__BackingField: 6
+  <ActiveSpeed>k__BackingField: 6
   <Score>k__BackingField: 10
+  <Damage>k__BackingField: 10

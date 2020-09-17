@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Boss
   m_EditorClassIdentifier: 
   <Health>k__BackingField: 100
-  <Speed>k__BackingField: 10
+  <ActiveSpeed>k__BackingField: 4
   <Score>k__BackingField: 50
+  <Damage>k__BackingField: 10

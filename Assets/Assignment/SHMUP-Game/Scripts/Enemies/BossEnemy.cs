@@ -27,9 +27,12 @@ public class BossEnemy : EnemyBaseBehaviour
 
     public override void SetActive(bool status)
     {
-        imortal = !status;
-        UIController.AssignBoss(bossName, currentHealth);
-        firePatrol = StartCoroutine(FireWeapons());
+        if (status)
+        {
+            imortal = !status;
+            UIController.AssignBoss(bossName, currentHealth);
+            firePatrol = StartCoroutine(FireWeapons());
+        }
         base.SetActive(status);
     }
 
