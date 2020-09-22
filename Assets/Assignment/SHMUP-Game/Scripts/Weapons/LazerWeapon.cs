@@ -1,26 +1,14 @@
 ﻿using UnityEngine;
 
-public class LazerWeapon : MonoBehaviour, IWeapon
+public class LazerWeapon : BaseWeapon
 {
-    [SerializeField] private GameObject bulletType = null;
-    [SerializeField] private float fireRate = 0.3f;
-    [SerializeField] private Transform firePoint = null;
-
-    private ProjectileBaseBehaviour projectileBehaviour;
-    private void Awake()
+    protected override void Awake()
     {
-        PlayerWeaponBehaviour.AddWeapon(this);
-
         projectileBehaviour = bulletType.GetComponent<ProjectileBaseBehaviour>();
     }
 
-    public void Fire()
+    public override void Fire()
     {
         GameObject newBullet = ProjectileObjectPool.GetProjectile(projectileBehaviour.ProjectileType, firePoint);
-    }
-
-    public float GetFireRate()
-    {
-        return fireRate;
     }
 }

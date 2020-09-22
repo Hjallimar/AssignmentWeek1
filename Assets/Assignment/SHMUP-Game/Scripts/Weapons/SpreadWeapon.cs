@@ -1,29 +1,30 @@
 ﻿using UnityEngine;
 
-public class SpreadWeapon : MonoBehaviour, IWeapon
+public class SpreadWeapon : BaseWeapon
 {
-    [SerializeField] private GameObject bulletType = null;
-    [SerializeField] private float fireRate = 0.8f;
-    [SerializeField] private Transform[] firePoints = new Transform[3];
-
-    private ProjectileBaseBehaviour projectileBehaviour;
-
-    private void Awake()
+    [SerializeField] private float spread = 5f;
+    [SerializeField] private int ammountOfBullets = 3;
+    [SerializeField] private Transform spreadFirePoint;
+    protected override void Awake()
     {
-        PlayerWeaponBehaviour.AddWeapon(this);
         projectileBehaviour = bulletType.GetComponent<ProjectileBaseBehaviour>();
     }
 
-    public void Fire()
+    public override void Fire()
     {
-        foreach (Transform trans in firePoints)
+        float totalAngle = (spread * ammountOfBullets) * 0.5f;
+        for (int i = 0; i < ammountOfBullets; i++)
         {
-            GameObject newBullet = ProjectileObjectPool.GetProjectile(projectileBehaviour.ProjectileType, trans);
+            spreadFirePoint.transform.localRotation = Quaternion.Euler(totalAngle, 0, 0);
+            totalAngle -= spread;
+            ProjectileObjectPool.GetProjectile(projectileBehaviour.ProjectileType, spreadFirePoint.transform);
         }
     }
 
-    public float GetFireRate()
+    public override void AssignFirePos(Transform newFirePoint)
     {
-        return fireRate;
+        base.AssignFirePos(newFirePoint);
+        spreadFirePoint.position = newFirePoint.position;
+        spreadFirePoint.rotation = newFirePoint.rotation;
     }
 }

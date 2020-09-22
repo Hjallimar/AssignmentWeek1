@@ -38,6 +38,8 @@ public class UIController : MonoBehaviour
     float currentHealth;
     float currentScore;
     float bossHealth;
+    int activeWeapons = 0;
+    int currentWeapon = 0;
 
     private void Update()
     {
@@ -60,6 +62,12 @@ public class UIController : MonoBehaviour
         EventCoordinator.RegisterEventListener<ResetGameEventInfo>(ResetGame);
         Instance.bossSlider.gameObject.SetActive(false);
         Instance.bossName.text = "";
+    }
+
+    public static void AddNewWeaponSprite(Sprite weaponSprite)
+    {
+        instance.weaponSlots[instance.activeWeapons].sprite = weaponSprite;
+        instance.activeWeapons++;
     }
 
     public void ToggleHowToPlay(bool status)

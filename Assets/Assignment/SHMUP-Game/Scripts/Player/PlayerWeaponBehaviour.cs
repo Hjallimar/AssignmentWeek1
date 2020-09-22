@@ -6,6 +6,8 @@ public class PlayerWeaponBehaviour : MonoBehaviour
 {
     private static List<IWeapon> weaponList = new List<IWeapon>();
 
+    [SerializeField] private Transform firePointOrigin;
+    private static Transform firePoint;
     private IWeapon currentWeapon = null;
 
     private Coroutine fireLoop = default;
@@ -13,7 +15,6 @@ public class PlayerWeaponBehaviour : MonoBehaviour
     private int weaponIndex = 0;
     private float weaponFireRate = 0;
     float coolDown = 0;
-
 
     public void Awake()
     {
@@ -25,10 +26,16 @@ public class PlayerWeaponBehaviour : MonoBehaviour
         {
             currentWeapon = null;
         }
+        firePoint = firePointOrigin;
     }
 
     public void Update()
     {
+        if(currentWeapon == null && weaponList.Count > 0)
+        {
+            currentWeapon = weaponList[0];
+        }
+
         coolDown += coolDown > 3 ? 0 : Time.deltaTime;
     }
 
@@ -36,7 +43,9 @@ public class PlayerWeaponBehaviour : MonoBehaviour
     {
         if (!weaponList.Contains(newWeapon))
         {
+            newWeapon.AssignFirePos(firePoint);
             weaponList.Add(newWeapon);
+            UIController.AddNewWeaponSprite(newWeapon.GetWeaponSprite());
         }
     }
 
@@ -81,7 +90,7 @@ public class PlayerWeaponBehaviour : MonoBehaviour
                 currentWeapon.Fire();
                 coolDown = 0;
             }
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(Time.deltaTime);
         }
     }
 }

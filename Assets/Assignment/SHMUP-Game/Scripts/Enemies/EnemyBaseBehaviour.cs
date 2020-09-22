@@ -89,7 +89,6 @@ public abstract class EnemyBaseBehaviour : MonoBehaviour, IDamageableObject, IEn
             currentSpeed = stats.NonActiveSpeed;
         }
         activeStatus = status;
-        Debug.Log("Changing speed from " + oldspeed + " to " + currentSpeed);
     }
 }
 
