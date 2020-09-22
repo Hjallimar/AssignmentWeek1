@@ -160,7 +160,7 @@ MonoBehaviour:
   firePoint: {fileID: 4329232938251339682}
   maxTravel: 6
   bossName: PewPew:er
-  fireProjectile: {fileID: 0}
+  fireProjectile: {fileID: 2575330884004652273, guid: 3d6ec5d6a00b01b40a9c45dbf9e6cfdb, type: 3}
   ammountOfBullets: 8
   spreadFireAngle: 8
   TimeBetweenAttacks: 1.3
