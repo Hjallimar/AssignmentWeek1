@@ -64,7 +64,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8192
   addInStart: 0
-  <Type>k__BackingField: 5
+  <Type>k__BackingField: 2
   explosionRadius: 3
   explosionLayers:
     serializedVersion: 2

@@ -39,7 +39,7 @@ public class HomingMissile : ProjectileBaseBehaviour
 
     public void OnEnemyDefeated(EventInfo ei)
     {
-        if (ei.GO.transform == target)
+        if (target != null && ei.GO.Equals(target.gameObject))
         {
             Debug.Log(gameObject.name + " got it, removing " + ei.GO.name + " as target");
             target = null;

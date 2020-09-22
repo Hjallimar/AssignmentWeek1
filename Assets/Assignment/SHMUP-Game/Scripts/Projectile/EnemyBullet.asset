@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 034ae772328805c4abc52597b2370039, type: 3}
   m_Name: EnemyBullet
   m_EditorClassIdentifier: 
-  <MoveSpeed>k__BackingField: 12
+  <MoveSpeed>k__BackingField: 15
   <Damage>k__BackingField: 2

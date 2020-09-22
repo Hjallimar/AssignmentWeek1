@@ -72,11 +72,6 @@ public abstract class EnemyBaseBehaviour : MonoBehaviour, IDamageableObject, IEn
         currentSpeed = stats.NonActiveSpeed;
     }
 
-    public virtual void OnDestroy()
-    {
-
-    }
-
     public virtual void SetActive(bool status)
     {
         float oldspeed = currentSpeed;

@@ -11,7 +11,6 @@ public class GameSupport : MonoBehaviour
     [SerializeField] private Vector2 topLeft = Vector3.zero;
     [SerializeField] private Vector2 bottomRight = Vector3.zero;
 
-
     private void Awake()
     {
         if (instance == null)
@@ -55,4 +54,4 @@ public class GameSupport : MonoBehaviour
 
 public enum TypeOfProjectile { Lazer, Missile, Spread, EnemyLazer, EnemyBullet };
 
-public enum EnemyType { Simple = 0, Mine = 1, Waving = 2, Charging = 3, Shooting = 4, Exploding = 5, Boss = 6 };
+public enum EnemyType { Simple = 0, Mine = 1, Exploding = 2, Boss = 3 };

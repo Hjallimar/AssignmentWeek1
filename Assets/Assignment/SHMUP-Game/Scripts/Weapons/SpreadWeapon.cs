@@ -4,7 +4,7 @@ public class SpreadWeapon : BaseWeapon
 {
     [SerializeField] private float spread = 5f;
     [SerializeField] private int ammountOfBullets = 3;
-    [SerializeField] private Transform spreadFirePoint;
+    private Quaternion originalRot;
     protected override void Awake()
     {
         projectileBehaviour = bulletType.GetComponent<ProjectileBaseBehaviour>();
@@ -15,16 +15,16 @@ public class SpreadWeapon : BaseWeapon
         float totalAngle = (spread * ammountOfBullets) * 0.5f;
         for (int i = 0; i < ammountOfBullets; i++)
         {
-            spreadFirePoint.transform.localRotation = Quaternion.Euler(totalAngle, 0, 0);
+            firePoint.transform.localRotation = Quaternion.Euler(totalAngle, 0, 0);
             totalAngle -= spread;
-            ProjectileObjectPool.GetProjectile(projectileBehaviour.ProjectileType, spreadFirePoint.transform);
+            ProjectileObjectPool.GetProjectile(projectileBehaviour.ProjectileType, firePoint.transform);
         }
+        firePoint.transform.localRotation = originalRot;
     }
 
     public override void AssignFirePos(Transform newFirePoint)
     {
         base.AssignFirePos(newFirePoint);
-        spreadFirePoint.position = newFirePoint.position;
-        spreadFirePoint.rotation = newFirePoint.rotation;
+        originalRot = firePoint.transform.localRotation;
     }
 }

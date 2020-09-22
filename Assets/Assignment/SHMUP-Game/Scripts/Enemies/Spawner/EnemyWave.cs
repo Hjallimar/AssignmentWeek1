@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyWave : MonoBehaviour, IWave
@@ -26,7 +25,6 @@ public class EnemyWave : MonoBehaviour, IWave
         }
     }
 
-    //This is going to be callback
     public void DefeatedEnemy(EventInfo ei)
     {
         if (enemiesInWave.Contains(ei.GO))

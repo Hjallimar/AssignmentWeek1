@@ -75,6 +75,10 @@ public class ProjectileObjectPool : MonoBehaviour
             if(instance.projectilePool[type].Count > 0)
             {
                 GameObject projectile = instance.projectilePool[type][0];
+                if (instance.activeProjectiles.ContainsKey(projectile))
+                {
+                    Debug.Log("Oh Shit");
+                }
                 ProjectileBaseBehaviour behaviour = projectile.GetComponent<ProjectileBaseBehaviour>();
                 projectile.SetActive(true);
                 instance.projectilePool[type].RemoveAt(0);

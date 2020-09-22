@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Missile
   m_EditorClassIdentifier: 
   <MoveSpeed>k__BackingField: 3
-  <Damage>k__BackingField: 10
+  <Damage>k__BackingField: 8

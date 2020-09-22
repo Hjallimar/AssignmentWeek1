@@ -4,8 +4,8 @@ using UnityEngine;
 public class ExplodingEnemy : EnemyBaseBehaviour
 {
     [SerializeField] private float explosionRadius = 5f;
-    [SerializeField] private LayerMask explosionLayers;
-    [SerializeField] private ParticleSystem explosion;
+    [SerializeField] private LayerMask explosionLayers = default;
+    [SerializeField] private ParticleSystem explosion = null;
     [SerializeField] private Renderer bombRenderer = null;
     bool killed = false;
     Collider[] hits = new Collider[0];
@@ -46,7 +46,4 @@ public class ExplodingEnemy : EnemyBaseBehaviour
         bombRenderer.enabled = true;
         killed = false;
     }
-
-
-
 }

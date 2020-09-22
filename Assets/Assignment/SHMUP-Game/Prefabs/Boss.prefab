@@ -156,11 +156,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   addInStart: 0
-  <Type>k__BackingField: 6
+  <Type>k__BackingField: 3
   firePoint: {fileID: 4329232938251339682}
   maxTravel: 6
   bossName: PewPew:er
-  primary: {fileID: 2575330884004652273, guid: 3d6ec5d6a00b01b40a9c45dbf9e6cfdb, type: 3}
+  fireProjectile: {fileID: 0}
   ammountOfBullets: 8
   spreadFireAngle: 8
   TimeBetweenAttacks: 1.3

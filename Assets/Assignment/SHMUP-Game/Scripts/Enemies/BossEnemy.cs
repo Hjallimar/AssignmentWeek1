@@ -6,7 +6,7 @@ public class BossEnemy : EnemyBaseBehaviour
     [SerializeField] private Transform firePoint = null;
     [SerializeField] private float maxTravel = 6f;
     [SerializeField] private string bossName = "";
-    [SerializeField] private GameObject primary = null;
+    [SerializeField] private GameObject fireProjectile = null;
 
     [SerializeField] private float ammountOfBullets = 8f;
     [SerializeField] private float spreadFireAngle = 5f;
@@ -21,7 +21,7 @@ public class BossEnemy : EnemyBaseBehaviour
 
     protected override void Awake()
     {
-        primaryFire = primary.GetComponent<ProjectileBaseBehaviour>();
+        primaryFire = fireProjectile.GetComponent<ProjectileBaseBehaviour>();
         base.Awake();
     }
 
@@ -70,6 +70,12 @@ public class BossEnemy : EnemyBaseBehaviour
     public override void ReturnToObjectPool()
     {
         StopFire();
+        GameObject powerUp = Spawner.GivePowerUp();
+        if (powerUp != null)
+        {
+            powerUp.SetActive(true);
+            powerUp.transform.position = transform.position;
+        }
         BossDefeatedEventInfo Bdei = new BossDefeatedEventInfo(gameObject, "I've have died");
         EventCoordinator.ActivateEvent(Bdei);
         EnemyObjectPool.AddEnemyToPool(gameObject);

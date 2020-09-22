@@ -84,7 +84,7 @@ public class PlayerBehaviour : MonoBehaviour, IDamageableObject
             currentHealth -= damage;
             UIController.UpdatePlayerHealth(damage);
 
-            if (currentHealth < 0)
+            if (currentHealth <= 0)
             {
                 ResetGameEventInfo Rgei = new ResetGameEventInfo(gameObject, "Player Has died");
                 EventCoordinator.ActivateEvent(Rgei);
@@ -113,30 +113,32 @@ public class PlayerBehaviour : MonoBehaviour, IDamageableObject
 
         active = true;
         UIController.AssignPlayer(currentHealth);
+        weaponBehaviour.StartGame();
         controller.AssingVariables(movementBehaviour, transform);
     }
 
     private IEnumerator ImmunityTimer(float timer)
     {
         float timePassed = 0f;
+
         while (imortal)
         {
             timePassed += Time.deltaTime;
 
-            playerMeshRenderer.enabled = !playerMeshRenderer.enabled;
+            if (timePassed % 5f > 0.19f)
+                playerMeshRenderer.enabled = !playerMeshRenderer.enabled;
 
             if (timePassed >= timer)
             {
                 imortal = false;
                 playerMeshRenderer.enabled = true;
             }
-            yield return new WaitForSeconds(Time.deltaTime * 3f);
+            yield return new WaitForSeconds(Time.deltaTime);
         }
     }
 
     public void OnDestroy()
     {
-
         EventCoordinator.UnregisterEventListener<ResetGameEventInfo>(ResetGame);
     }
 
@@ -145,6 +147,7 @@ public class PlayerBehaviour : MonoBehaviour, IDamageableObject
         active = false;
         currentHealth = stats.Health;
         transform.position = startPosition;
+        weaponBehaviour.ResetGame();
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }

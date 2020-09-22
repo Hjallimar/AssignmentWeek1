@@ -4,6 +4,7 @@ public class ProjectileBaseBehaviour : MonoBehaviour
 {
     [SerializeField] protected ProjectileStats stats;
     [SerializeField] protected LayerMask hitLayers;
+    [SerializeField] protected float skinwidth = 0.1f;
 
     [field: SerializeField] public TypeOfProjectile ProjectileType { get; set; } = default; 
 
@@ -52,7 +53,7 @@ public class ProjectileBaseBehaviour : MonoBehaviour
 
     protected void CalculateColission()
     {
-        if(Physics.Raycast(transform.position, transform.forward, out hit, distance, hitLayers))
+        if(Physics.Raycast(transform.position, transform.forward, out hit, distance + skinwidth, hitLayers))
         {
             TargetHit();
             ReturnToPool();

@@ -2,7 +2,7 @@
 
 public class ActivationController : MonoBehaviour
 {
-    [SerializeField] private bool activationStatus;
+    [SerializeField] private bool activationStatus = false;
     private void OnTriggerEnter(Collider other)
     {
         IEnemy enemy = other.GetComponent<IEnemy>();
@@ -10,6 +10,10 @@ public class ActivationController : MonoBehaviour
         {
             Debug.Log("Activating enemy: " + other.name);
             enemy.SetActive(activationStatus);
+        }
+        else  if (other.GetComponent<WeaponPowerUp>() != null)
+        {
+            other.gameObject.SetActive(false);
         }
     }
 }

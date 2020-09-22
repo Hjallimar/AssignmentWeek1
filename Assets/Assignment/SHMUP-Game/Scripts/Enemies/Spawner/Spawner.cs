@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Spawner : MonoBehaviour
 {
@@ -26,6 +28,9 @@ public class Spawner : MonoBehaviour
     [Header("")]
     [SerializeField] private int spawnsBeforeBossSpawn = 10;
 
+    [SerializeField] private GameObject[] powerUp = new GameObject[2];
+
+    private int nextPowerup = 0;
     private bool spawnable = false;
     private int spawnCounter = 0;
     private float timeCounter = 0f;
@@ -133,6 +138,16 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    public static GameObject GivePowerUp()
+    {
+        return instance.nextPowerup > 1 ? null: instance.powerUp[instance.nextPowerup];
+    }
+
+    public static void PowerUpActivated(bool status)
+    {
+        instance.nextPowerup += status ? 1 : 0; 
+    }
+
     private static IEnumerator WaitForNewWave(float wait)
     {
         float counter = 0f;
@@ -168,5 +183,6 @@ public class Spawner : MonoBehaviour
         instance.currentWave = 0;
         instance.spawnCounter = 0;
         instance.timeCounter = 0;
+        instance.nextPowerup = 0;
     }
 }

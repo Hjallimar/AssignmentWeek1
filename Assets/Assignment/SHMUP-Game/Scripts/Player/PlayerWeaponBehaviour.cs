@@ -1,24 +1,25 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerWeaponBehaviour : MonoBehaviour
 {
-    private static List<IWeapon> weaponList = new List<IWeapon>();
+    private static IWeapon[] weaponList = new IWeapon[3];
 
-    [SerializeField] private Transform firePointOrigin;
+    [SerializeField] private Transform firePointOrigin = null;
+    [SerializeField] private BaseWeapon startWeapon = null;
     private static Transform firePoint;
     private IWeapon currentWeapon = null;
 
     private Coroutine fireLoop = default;
 
-    private int weaponIndex = 0;
+    private int currentWeaponIndex = 0;
     private float weaponFireRate = 0;
     float coolDown = 0;
+    private static int weaponIndex = -1;
 
     public void Awake()
     {
-        if (weaponList.Count != 0)
+        if (weaponList.Length != 0)
         {
             currentWeapon = weaponList[0];
         }
@@ -31,7 +32,7 @@ public class PlayerWeaponBehaviour : MonoBehaviour
 
     public void Update()
     {
-        if(currentWeapon == null && weaponList.Count > 0)
+        if(currentWeapon == null && weaponList.Length > 0)
         {
             currentWeapon = weaponList[0];
         }
@@ -39,28 +40,40 @@ public class PlayerWeaponBehaviour : MonoBehaviour
         coolDown += coolDown > 3 ? 0 : Time.deltaTime;
     }
 
+    public void StartGame()
+    {
+        AddWeapon(startWeapon);
+    }
+
     public static void AddWeapon(IWeapon newWeapon)
     {
-        if (!weaponList.Contains(newWeapon))
+        foreach(IWeapon weapon in weaponList)
         {
-            newWeapon.AssignFirePos(firePoint);
-            weaponList.Add(newWeapon);
-            UIController.AddNewWeaponSprite(newWeapon.GetWeaponSprite());
+            if (weapon == newWeapon)
+            {
+                return;
+            }
         }
+
+        weaponIndex++;
+        weaponList[weaponIndex] = newWeapon;
+        newWeapon.AssignFirePos(firePoint);
+        UIController.AddNewWeaponSprite(newWeapon.GetWeaponSprite());
+
     }
 
     public void SwapWeapon(int i)
     {
-        weaponIndex += i;
-        if (weaponIndex > weaponList.Count - 1)
+        currentWeaponIndex += i;
+        if (currentWeaponIndex > weaponIndex)
         {
-            weaponIndex = 0;
+            currentWeaponIndex = 0;
         }
-        else if (weaponIndex < 0)
+        else if (currentWeaponIndex < 0)
         {
-            weaponIndex = weaponList.Count - 1;
+            currentWeaponIndex = weaponIndex;
         }
-        currentWeapon = weaponList[weaponIndex];
+        currentWeapon = weaponList[currentWeaponIndex];
         weaponFireRate = currentWeapon.GetFireRate();
     }
 
@@ -78,6 +91,14 @@ public class PlayerWeaponBehaviour : MonoBehaviour
         {
             StopCoroutine(fireLoop);
         }
+    }
+
+    public void ResetGame()
+    {
+        weaponIndex = -1;
+        currentWeapon = null;
+        StopCoroutine(fireLoop);
+        weaponList = new IWeapon[3];
     }
 
     private IEnumerator FiringWeapon()
